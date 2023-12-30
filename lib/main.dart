@@ -6,38 +6,57 @@ void main() {
   return runApp(
       MaterialApp.router(
         // theme: ThemeData(),
-        darkTheme: ThemeData(
-          fontFamily: 'lato',
+        darkTheme: ThemeData.dark().copyWith(
+          primaryColor: AppColors.textColor,
           scaffoldBackgroundColor: AppColors.backgroundColor,
           textTheme: const TextTheme(
               headlineLarge: TextStyle(
                 fontSize: 40,
-                fontWeight: FontWeight.w800,
+                  fontFamily: 'lato',
+                fontWeight: FontWeight.w900,
                 color: AppColors.textColor
               ),
               headlineSmall: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
+                  fontFamily: 'lato',
                 color: AppColors.textColor,
                 letterSpacing: 0.3,
                 height: 1.5
               ),
               displayMedium: TextStyle(
                 fontSize: 14,
+                  fontFamily: 'lato',
                 fontWeight: FontWeight.w400, color: AppColors.textColor
               ),
               displaySmall: TextStyle(
                 fontSize: 12,
+                  fontFamily: 'lato',
                 fontWeight: FontWeight.w400,
                   color: AppColors.textColor
               ),
               labelLarge: TextStyle(
-                fontSize: 16,
+                fontSize: 16,fontFamily: 'lato',
                 fontWeight: FontWeight.w700,
                   color: AppColors.textColor,
               ),
-          )
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(AppColors.primaryColor),
+              minimumSize: MaterialStateProperty.all<Size>(const Size(double.infinity,56)),
+              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(horizontal: 20.0),
+              ),
+              shape: MaterialStateProperty.all<OutlinedBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0), // Set button border radius
+                ),
+              ),
+            ),
+          ),
         ),
+        themeMode: ThemeMode.dark,
         routerConfig: routes,
       )
   );
