@@ -1,19 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:vroom_vroom/views/screens/authentication/login.dart';
+import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
+import 'package:vroom_vroom/utils/routes/app_routes.dart';
 
 void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Vroom Vroom',
-      home: LoginPage(),
-    );
-  }
+  return runApp(
+      MaterialApp.router(
+        // theme: ThemeData(),
+        darkTheme: ThemeData(
+          fontFamily: 'lato',
+          scaffoldBackgroundColor: AppColors.backgroundColor,
+          textTheme: const TextTheme(
+              headlineLarge: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.w800,
+                color: AppColors.textColor
+              ),
+              headlineSmall: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textColor,
+                letterSpacing: 0.3,
+                height: 1.5
+              ),
+              displayMedium: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400, color: AppColors.textColor
+              ),
+              displaySmall: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                  color: AppColors.textColor
+              ),
+              labelLarge: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                  color: AppColors.textColor,
+              ),
+          )
+        ),
+        routerConfig: routes,
+      )
+  );
 }
 
