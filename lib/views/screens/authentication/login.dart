@@ -10,13 +10,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  GlobalKey<FormState> key = GlobalKey<FormState>();
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       body: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: height,
@@ -46,12 +52,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: (48/height)*height,),
                 Form(
+                  key: key,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       TextFormField(
+                        controller: _emailController,
                         decoration: InputDecoration(
+                          icon: SvgPicture.asset('asset/icons/email.svg'),
                           labelText: 'Email',
                           filled: true,
                           fillColor: AppColors.secondaryColor,
@@ -60,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: AppColors.primaryColor), // Border color when focused
+                            borderSide: const BorderSide(color: AppColors.primaryColor),
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
@@ -69,7 +78,9 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(height: (28/height)*height),
 
                       TextFormField(
+                        controller: _passwordController,
                         decoration: InputDecoration(
+                          icon: SvgPicture.asset('asset/icons/password.svg'),
                           labelText: 'Password',
                           filled: true,
                           fillColor: AppColors.secondaryColor,
@@ -78,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: AppColors.primaryColor), // Border color when focused
+                            borderSide: const BorderSide(color: AppColors.primaryColor),
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
@@ -90,8 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {
-                          },
+                          onPressed: () {},
                           child: Text('Forgot Password?',style: Theme.of(context).textTheme.displaySmall?.copyWith(color: AppColors.primaryColor),),
                         ),
                       ),
@@ -100,8 +110,7 @@ class _LoginPageState extends State<LoginPage> {
 
                       // Login Button
                       ElevatedButton(
-                        onPressed: () {
-                        },
+                        onPressed: () {},
                         child: Text('Login',style: Theme.of(context).textTheme.labelLarge,),
                       ),
 
@@ -109,8 +118,7 @@ class _LoginPageState extends State<LoginPage> {
 
                       ElevatedButton.icon(
                         style: Theme.of(context).elevatedButtonTheme.style?.copyWith(backgroundColor: MaterialStateProperty.all<Color>(AppColors.textColor),),
-                        onPressed: () {
-                        },
+                        onPressed: () {},
                         icon: SvgPicture.asset('asset/icons/google.svg'),
                         label: Text('Login with Google',style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.black),),
                       ),
@@ -118,8 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(height: (22/height)*height),
 
                       TextButton(
-                        onPressed: () {
-                        },
+                        onPressed: () {},
                         child: Text("Don't have an account? Sign up",style: Theme.of(context).textTheme.displaySmall?.copyWith(color: const Color.fromRGBO(169, 169, 169, 1)),),
                       ),
                     ],

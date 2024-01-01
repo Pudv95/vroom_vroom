@@ -12,7 +12,7 @@ void main() {
           textTheme: const TextTheme(
               headlineLarge: TextStyle(
                 fontSize: 40,
-                  fontFamily: 'lato',
+                fontFamily: 'lato',
                 fontWeight: FontWeight.w900,
                 color: AppColors.textColor
               ),
