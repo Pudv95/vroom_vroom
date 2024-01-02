@@ -60,8 +60,12 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
-                          icon: SvgPicture.asset('asset/icons/email.svg'),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.fromLTRB(15,5,10,5),
+                            child: SvgPicture.asset('asset/icons/email.svg',),
+                          ),
                           labelText: 'Email',
+                          prefixIconConstraints: const BoxConstraints(maxHeight: 80,maxWidth: 80),
                           filled: true,
                           fillColor: AppColors.secondaryColor,
                           border: OutlineInputBorder(
@@ -80,8 +84,12 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         controller: _passwordController,
                         decoration: InputDecoration(
-                          icon: SvgPicture.asset('asset/icons/password.svg'),
                           labelText: 'Password',
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.fromLTRB(15,5,10,5),
+                            child: SvgPicture.asset('asset/icons/password.svg'),
+                          ),
+                          prefixIconConstraints: const BoxConstraints(maxHeight: 80,maxWidth: 80),
                           filled: true,
                           fillColor: AppColors.secondaryColor,
                           border: OutlineInputBorder(
@@ -120,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: Theme.of(context).elevatedButtonTheme.style?.copyWith(backgroundColor: MaterialStateProperty.all<Color>(AppColors.textColor),),
                         onPressed: () {},
                         icon: SvgPicture.asset('asset/icons/google.svg'),
-                        label: Text('Login with Google',style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.black),),
+                        label: Text('Continue with Google',style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.black),),
                       ),
 
                       SizedBox(height: (22/height)*height),
