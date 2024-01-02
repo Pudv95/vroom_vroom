@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vroom_vroom/views/screens/authentication/signup.dart';
-import 'package:vroom_vroom/views/screens/authentication/login.dart';
+import 'package:vroom_vroom/views/screens/authentication/signup/signup.dart';
+
 
 final GoRouter routes = GoRouter(
     routes: <GoRoute>[
       GoRoute(path: '/', builder: (BuildContext context,GoRouterState state){
-        return const SignUp();
+        return SignUp();
       },routes: const [
 
       ]),
