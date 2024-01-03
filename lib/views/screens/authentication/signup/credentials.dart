@@ -7,10 +7,10 @@ import 'package:vroom_vroom/views/screens/authentication/widgets/custom_input_fi
 class Credentials extends StatelessWidget {
   Credentials({super.key});
   final TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
-    double width = MediaQuery.sizeOf(context).width;
     return Column(
       children: [
         SizedBox(

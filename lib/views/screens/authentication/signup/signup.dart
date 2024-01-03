@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
-import 'package:vroom_vroom/views/screens/authentication/signup/cerdentials.dart';
+import 'package:vroom_vroom/views/screens/authentication/signup/verify_credentials.dart';
 import 'package:vroom_vroom/views/screens/authentication/signup/user_details.dart';
 import 'package:vroom_vroom/views/screens/authentication/signup/verify_number.dart';
 
@@ -11,7 +11,7 @@ class SignUp extends StatelessWidget {
   SignUp({super.key});
 
   final PageController pageController = PageController();
-  final List<Widget> pages = [Credentials(),VerifyNumber(),UserDetails()];
+  final List<Widget> pages = [VerifyCredentials(),VerifyNumber(),UserDetails()];
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
@@ -50,7 +50,7 @@ class SignUp extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     controller: pageController,
                     itemBuilder: (BuildContext context, int index) {
-                      return pages[index+1];
+                      return pages[index];
                   },),
                 ),
                 const Spacer(),
