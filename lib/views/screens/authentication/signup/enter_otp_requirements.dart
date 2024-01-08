@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:vroom_vroom/controllers/authentication/controllers.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 
 class OTPRequirement extends StatelessWidget {
@@ -38,12 +39,8 @@ class OTPRequirement extends StatelessWidget {
         TextFormField(
           keyboardType: isEmail?TextInputType.emailAddress:TextInputType.number,
           decoration: InputDecoration(
-            prefixIcon: Padding(
-              padding: const EdgeInsets.fromLTRB(15,5,10,5),
-              child: SvgPicture.asset('asset/icons/email.svg',),
-            ),
             labelText: isEmail?'Email':'Phone number',
-            prefixIconConstraints: const BoxConstraints(maxHeight: 80,maxWidth: 80),
+            prefixIcon: const Padding(padding: EdgeInsets.all(15), child: Text('+91 ')),
             filled: true,
             fillColor: AppColors.secondaryColor,
             border: OutlineInputBorder(
@@ -56,6 +53,12 @@ class OTPRequirement extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(
+          height: (285 / height) * height,
+        ),
+        ElevatedButton(onPressed: (){
+          PageControllers.verifyController.animateToPage(2, duration: Duration(milliseconds: 500), curve: Easing.linear);
+        }, child: Text('Next',style: Theme.of(context).textTheme.labelLarge,))
       ],
     );
   }
