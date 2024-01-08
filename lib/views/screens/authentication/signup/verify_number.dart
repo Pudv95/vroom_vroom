@@ -4,17 +4,19 @@ import 'package:vroom_vroom/views/screens/authentication/signup/enter_otp_requir
 import 'package:vroom_vroom/views/screens/authentication/signup/verify_otp.dart';
 
 class VerifyNumber extends StatelessWidget {
-  VerifyNumber({super.key});
+  final bool isEmail;
+  final bool isLoggingIn;
+  const VerifyNumber({super.key,required this.isEmail,this.isLoggingIn = false});
 
-  final List<Widget> credPage = [const OTPRequirement(isEmail: false),const VerifyOTP(isEmail: false)];
   @override
   Widget build(BuildContext context) {
+    final List<Widget> credPage = [OTPRequirement(isEmail: isEmail,isLoggingIn: true,),VerifyOTP(isEmail: isEmail,isLoggingIn: true,)];
     return PageView.builder(
-      controller: PageControllers.verifyController,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 2,
-      itemBuilder: (BuildContext context, int index) {
-        return credPage[index];
-      },);
+        controller: PageControllers.verifyController,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: 2,
+        itemBuilder: (BuildContext context, int index) {
+          return credPage[index];
+        },);
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vroom_vroom/views/screens/authentication/login/details_for_otp.dart';
 import 'package:vroom_vroom/views/screens/authentication/login/forgot_password.dart';
 import 'package:vroom_vroom/views/screens/authentication/login/login.dart';
+import 'package:vroom_vroom/views/screens/authentication/login/reset_password.dart';
 import 'package:vroom_vroom/views/screens/authentication/signup/signup.dart';
 import 'package:vroom_vroom/views/screens/authentication/signup/user_details.dart';
 import 'package:vroom_vroom/views/screens/authentication/signup/verify_otp.dart';
@@ -47,22 +49,22 @@ final GoRouter routes = GoRouter(
           pageBuilder: (context, state) => customTransition(
               context: context, state: state, child: const ForgotPassword()),
           routes: [
-            GoRoute(
-              path: 'verify_number',
-              builder: (BuildContext context, GoRouterState state) {
-                return VerifyNumber();
-              },
-              pageBuilder: (context, state) => customTransition(
-                  context: context, state: state, child: VerifyNumber()),
-            ),
+              GoRoute(
+                path: 'verify_detail_requirement',
+                builder: (BuildContext context, GoRouterState state) {
+                  Map extras = state.extra as Map;
+                  return DetailsForOtp(isEmail: extras['isEmail'], isLoggingIn: extras['isLoggingIn'],);
+                },
+                pageBuilder: (context, state) => customTransition(
+                    context: context, state: state, child: DetailsForOtp(isEmail: (state.extra as Map)['isEmail'],isLoggingIn: (state.extra as Map)['isLoggingIn'],)),
+              ),
             GoRoute(
               path: 'reset_password',
               builder: (BuildContext context, GoRouterState state) {
-                // return ResetPassword();
-                return const Placeholder();
+                return const ResetPassword();
               },
               pageBuilder: (context, state) => customTransition(
-                  context: context, state: state, child: const Placeholder()),
+                  context: context, state: state, child: const ResetPassword()),
             ),
           ],
         ),

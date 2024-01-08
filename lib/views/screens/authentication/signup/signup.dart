@@ -10,7 +10,7 @@ import 'package:vroom_vroom/views/screens/authentication/signup/verify_otp.dart'
 
 class SignUp extends StatelessWidget {
   SignUp({super.key});
-  final List<Widget> pages = [VerifyCredentials(),VerifyNumber(),UserDetails()];
+  final List<Widget> pages = [VerifyCredentials(),const VerifyNumber(isEmail: false,),const UserDetails()];
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;

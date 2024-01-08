@@ -5,7 +5,8 @@ import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 
 class OTPRequirement extends StatelessWidget {
   final bool isEmail;
-  const OTPRequirement({super.key,required this.isEmail});
+  final bool isLoggingIn;
+  const OTPRequirement({super.key,required this.isEmail,this.isLoggingIn = false});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class OTPRequirement extends StatelessWidget {
           keyboardType: isEmail?TextInputType.emailAddress:TextInputType.number,
           decoration: InputDecoration(
             labelText: isEmail?'Email':'Phone number',
-            prefixIcon: const Padding(padding: EdgeInsets.all(15), child: Text('+91 ')),
+            prefixIcon:Padding(padding: const EdgeInsets.all(15), child: isEmail?SvgPicture.asset('asset/icons/email.svg',):const Text('+91 ')),
             filled: true,
             fillColor: AppColors.secondaryColor,
             border: OutlineInputBorder(
@@ -57,7 +58,7 @@ class OTPRequirement extends StatelessWidget {
           height: (285 / height) * height,
         ),
         ElevatedButton(onPressed: (){
-          PageControllers.verifyController.animateToPage(2, duration: Duration(milliseconds: 500), curve: Easing.linear);
+          PageControllers.verifyController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Easing.linear);
         }, child: Text('Next',style: Theme.of(context).textTheme.labelLarge,))
       ],
     );

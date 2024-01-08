@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vroom_vroom/views/screens/authentication/widgets/reset_buttons.dart';
 
 
@@ -60,7 +61,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     });
               }),
               SizedBox(height: (252.5/height)*height,),
-              ElevatedButton(onPressed: (){}, child: Text('Reset Password',style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),)),
+              ElevatedButton(onPressed: (){
+                if(selected){
+                  //sms
+                  context.go('/forgot_password/verify_detail_requirement', extra: {'isEmail':false,'isLoggingIn':true});
+                }
+                else{
+                  //email
+                  context.go('/forgot_password/verify_detail_requirement' , extra: {'isEmail':true,'isLoggingIn':true});
+                }
+              }, child: Text('Reset Password',style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),)),
               const Spacer(),
             ],
           ),

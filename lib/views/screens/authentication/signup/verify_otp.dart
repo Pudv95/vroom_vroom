@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 import 'package:vroom_vroom/controllers/authentication/controllers.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 
 class VerifyOTP extends StatelessWidget {
   final bool isEmail;
-  const VerifyOTP({super.key,required this.isEmail});
+  final bool isLoggingIn;
+  const VerifyOTP({super.key,required this.isEmail,this.isLoggingIn = false});
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +67,9 @@ class VerifyOTP extends StatelessWidget {
             )),
         SizedBox(height: (22/height)*height,),
         ElevatedButton(onPressed: (){
+          if(isLoggingIn){
+            context.go('/forgot_password/reset_password');
+          }
           isEmail?PageControllers.signUpController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Easing.linear):PageControllers.signUpController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Easing.linear);
         }, child: Text('Confirm',style: Theme.of(context).textTheme.labelLarge,))
 
