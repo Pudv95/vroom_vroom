@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:vroom_vroom/controllers/authentication/controllers.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 
-class VerifyEmail extends StatelessWidget {
-  const VerifyEmail({super.key});
+class VerifyOTP extends StatelessWidget {
+  final bool isEmail;
+  const VerifyOTP({super.key,required this.isEmail});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,8 @@ class VerifyEmail extends StatelessWidget {
         ),
         Center(
           child: Text(
-            'Verify your email',
+            isEmail?'Verify your email':'Verify your phone number',
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineLarge,
           ),
         ),
@@ -25,7 +28,7 @@ class VerifyEmail extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: Text(
-            'You need to enter 4-digit code we have \nsent to your email address',
+            isEmail?'You need to enter 6-digit code we have \nsent to your email address':'You need to enter 6-digit code we have \nsent to your phone number',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
@@ -61,7 +64,9 @@ class VerifyEmail extends StatelessWidget {
               ],
             )),
         SizedBox(height: (22/height)*height,),
-        ElevatedButton(onPressed: (){}, child: Text('Confirm',style: Theme.of(context).textTheme.labelLarge,))
+        ElevatedButton(onPressed: (){
+          isEmail?PageControllers.signUpController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Easing.linear):PageControllers.signUpController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Easing.linear);
+        }, child: Text('Confirm',style: Theme.of(context).textTheme.labelLarge,))
 
       ],
     );

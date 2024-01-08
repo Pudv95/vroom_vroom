@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -109,7 +110,9 @@ class _LoginPageState extends State<LoginPage> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.push('/forgot_password');
+                          },
                           child: Text('Forgot Password?',style: Theme.of(context).textTheme.displaySmall?.copyWith(color: AppColors.primaryColor),),
                         ),
                       ),
@@ -133,9 +136,18 @@ class _LoginPageState extends State<LoginPage> {
 
                       SizedBox(height: (22/height)*height),
 
-                      TextButton(
-                        onPressed: () {},
-                        child: Text("Don't have an account? Sign up",style: Theme.of(context).textTheme.displaySmall?.copyWith(color: const Color.fromRGBO(169, 169, 169, 1)),),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Don't have an account?", style: Theme.of(context).textTheme.displaySmall?.copyWith(color: const Color.fromRGBO(169, 169, 169, 1))),
+                          const SizedBox(width: 5),
+                          TextButton(
+                            onPressed: () {
+                              context.push('/signup');
+                            },
+                            child: Text("Sign up", style: Theme.of(context).textTheme.displaySmall?.copyWith(color: AppColors.primaryColor)),
+                          ),
+                        ],
                       ),
                     ],
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:vroom_vroom/controllers/authentication/controllers.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/views/screens/authentication/widgets/custom_input_field.dart';
 
@@ -68,7 +69,9 @@ class Credentials extends StatelessWidget {
           height: (22 / height) * height,
         ),
         ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+                PageControllers.credentialsController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Easing.linear);
+            },
             child: Text(
               'Create Account',
               style: Theme.of(context).textTheme.labelLarge,

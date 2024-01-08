@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/routes/app_routes.dart';
 
@@ -10,36 +11,36 @@ void main() {
           primaryColor: AppColors.textColor,
           scaffoldBackgroundColor: AppColors.backgroundColor,
           textTheme: const TextTheme(
-              headlineLarge: TextStyle(
+            headlineLarge: TextStyle(
                 fontSize: 40,
                 fontFamily: 'lato',
                 fontWeight: FontWeight.w900,
                 color: AppColors.textColor
-              ),
-              headlineSmall: TextStyle(
+            ),
+            headlineSmall: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                  fontFamily: 'lato',
+                fontFamily: 'lato',
                 color: AppColors.textColor,
                 letterSpacing: 0.3,
                 height: 1.5
-              ),
-              displayMedium: TextStyle(
+            ),
+            displayMedium: TextStyle(
                 fontSize: 14,
-                  fontFamily: 'lato',
+                fontFamily: 'lato',
                 fontWeight: FontWeight.w400, color: AppColors.textColor
-              ),
-              displaySmall: TextStyle(
+            ),
+            displaySmall: TextStyle(
                 fontSize: 12,
-                  fontFamily: 'lato',
+                fontFamily: 'lato',
                 fontWeight: FontWeight.w400,
-                  color: AppColors.textColor
-              ),
-              labelLarge: TextStyle(
-                fontSize: 16,fontFamily: 'lato',
-                fontWeight: FontWeight.w700,
-                  color: AppColors.textColor,
-              ),
+                color: AppColors.textColor
+            ),
+            labelLarge: TextStyle(
+              fontSize: 16,fontFamily: 'lato',
+              fontWeight: FontWeight.w700,
+              color: AppColors.textColor,
+            ),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
