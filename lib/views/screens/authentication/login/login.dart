@@ -1,24 +1,20 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:vroom_vroom/controllers/authentication/controllers.dart';
+import 'package:vroom_vroom/controllers/authentication/login_provider.dart';
+import 'package:vroom_vroom/services/authentication/login.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  GlobalKey<FormState> key = GlobalKey<FormState>();
-
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
 
   @override
   Widget build(BuildContext context) {
+    final state  = context.watch<LoginProvider>();
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
@@ -53,14 +49,16 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: (48/height)*height,),
                 Form(
-                  key: key,
+                  key: state.formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       TextFormField(
-                        controller: _emailController,
+                        controller: TextControllers.emailController,
+                        onChanged: (value) => state.setEmail(value),
                         decoration: InputDecoration(
+                          errorText: (state.emailError == '')?null:state.emailError,
                           prefixIcon: Padding(
                             padding: const EdgeInsets.fromLTRB(15,5,10,5),
                             child: SvgPicture.asset('asset/icons/email.svg',),
@@ -83,9 +81,11 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(height: (28/height)*height),
 
                       TextFormField(
-                        controller: _passwordController,
+                        controller: TextControllers.passwordController,
+                        onChanged: (value) => state.setEmail(value),
                         decoration: InputDecoration(
                           labelText: 'Password',
+                          errorText: (state.passwordError == '')?null:state.passwordError,
                           prefixIcon: Padding(
                             padding: const EdgeInsets.fromLTRB(15,5,10,5),
                             child: SvgPicture.asset('asset/icons/password.svg'),
@@ -121,7 +121,9 @@ class _LoginPageState extends State<LoginPage> {
 
                       // Login Button
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+
+                        },
                         child: Text('Login',style: Theme.of(context).textTheme.labelLarge,),
                       ),
 
@@ -129,7 +131,13 @@ class _LoginPageState extends State<LoginPage> {
 
                       ElevatedButton.icon(
                         style: Theme.of(context).elevatedButtonTheme.style?.copyWith(backgroundColor: MaterialStateProperty.all<Color>(AppColors.textColor),),
-                        onPressed: () {},
+                        onPressed: () async {
+                          // String? email = TextControllers.emailController.text.toString();
+                          // String? password = TextControllers.passwordController.text.toString();
+                          // await LoginUser().getToken(email, password);
+
+
+                        },
                         icon: SvgPicture.asset('asset/icons/google.svg'),
                         label: Text('Continue with Google',style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.black),),
                       ),

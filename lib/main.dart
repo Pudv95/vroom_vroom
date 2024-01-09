@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vroom_vroom/controllers/authentication/login_provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/routes/app_routes.dart';
 
 void main() {
   return runApp(
-      MaterialApp.router(
+      MultiProvider(
+        providers: [
+        ChangeNotifierProvider(create: (context) => LoginProvider())
+      ],child: MaterialApp.router(
         // theme: ThemeData(),
         darkTheme: ThemeData.dark().copyWith(
           primaryColor: AppColors.textColor,
@@ -59,7 +63,7 @@ void main() {
         ),
         themeMode: ThemeMode.dark,
         routerConfig: routes,
-      )
+      ),)
   );
 }
 
