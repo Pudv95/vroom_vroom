@@ -144,12 +144,14 @@ class LoginPage extends StatelessWidget {
                       // Login Button
                       ElevatedButton(
                         onPressed: () async {
-                          LoginUserModel? res = await performLogin(TextControllers.emailController.text.toString(), TextControllers.passwordController.text.toString());
-                          if (res != null) {
-                            state.validateLogin(res.msg, context);
+                          if(state.formKey.currentState!.validate()){
+                            LoginUserModel? res = await performLogin(TextControllers.emailController.text.toString(), TextControllers.passwordController.text.toString());
+                            if (res != null) {
+                              state.validateLogin(res.msg, context);
 
-                          } else {
-                            state.validateLogin("Invalid Credentials!", context);
+                            } else {
+                              state.validateLogin("Invalid Credentials!", context);
+                            }
                           }
                         },
                         child: Text('Login',style: Theme.of(context).textTheme.labelLarge,),
@@ -159,9 +161,7 @@ class LoginPage extends StatelessWidget {
 
                       ElevatedButton.icon(
                         style: Theme.of(context).elevatedButtonTheme.style?.copyWith(backgroundColor: MaterialStateProperty.all<Color>(AppColors.textColor),),
-                        onPressed: () async {
-                              LoginUser().getToken(TextControllers.emailController.text.toString(), TextControllers.passwordController.text.toString());
-                        },
+                        onPressed: () async {},
                         icon: SvgPicture.asset('asset/icons/google.svg'),
                         label: Text('Continue with Google',style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.black),),
                       ),

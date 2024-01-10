@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:vroom_vroom/utils/providers/authentication/forgot_password_provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/login_provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/routes/app_routes.dart';
@@ -11,7 +12,8 @@ void main() async {
   return runApp(
       MultiProvider(
         providers: [
-        ChangeNotifierProvider(create: (context) => LoginProvider())
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => ForgotPasswordProvider())
       ],child: MaterialApp.router(
         // theme: ThemeData(),
         darkTheme: ThemeData.dark().copyWith(

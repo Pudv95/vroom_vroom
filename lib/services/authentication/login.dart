@@ -11,6 +11,7 @@ class LoginUser {
 
 
   Future<Map<String, dynamic>> getToken(String email, String password) async {
+    email.trim();
     final String tokenGenerateUrl = '$baseUrl/auth/token/generate/';
     try {
       final response = await http.post(

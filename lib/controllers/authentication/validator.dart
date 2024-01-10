@@ -22,4 +22,14 @@ class Validator {
     return null;
   }
 
+  static String? isValidNumber(String number) {
+    final numberRegex = RegExp(r'^[6-9]\d{9}$');
+
+    if (numberRegex.hasMatch(number)) {
+      return null;
+    } else {
+      return 'Please enter a valid number';
+    }
+  }
+
 }
