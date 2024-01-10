@@ -4,8 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vroom_vroom/controllers/authentication/controllers.dart';
-import 'package:vroom_vroom/controllers/authentication/login_provider.dart';
+import 'package:vroom_vroom/controllers/authentication/validate_login.dart';
+import 'package:vroom_vroom/controllers/authentication/validator.dart';
+import 'package:vroom_vroom/models/authentication/login_model.dart';
 import 'package:vroom_vroom/services/authentication/login.dart';
+import 'package:vroom_vroom/utils/providers/authentication/login_provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 
 class LoginPage extends StatelessWidget {
@@ -49,6 +52,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(height: (48/height)*height,),
                 Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   key: state.formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -64,6 +68,14 @@ class LoginPage extends StatelessWidget {
                             child: SvgPicture.asset('asset/icons/email.svg',),
                           ),
                           labelText: 'Email',
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                           prefixIconConstraints: const BoxConstraints(maxHeight: 80,maxWidth: 80),
                           filled: true,
                           fillColor: AppColors.secondaryColor,
@@ -76,19 +88,28 @@ class LoginPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
+                        validator: (value) => Validator.isValidEmail(value!),
                       ),
 
                       SizedBox(height: (28/height)*height),
 
                       TextFormField(
                         controller: TextControllers.passwordController,
-                        onChanged: (value) => state.setEmail(value),
+                        onChanged: (value) => state.setPassword(value),
                         decoration: InputDecoration(
                           labelText: 'Password',
                           errorText: (state.passwordError == '')?null:state.passwordError,
                           prefixIcon: Padding(
                             padding: const EdgeInsets.fromLTRB(15,5,10,5),
                             child: SvgPicture.asset('asset/icons/password.svg'),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           prefixIconConstraints: const BoxConstraints(maxHeight: 80,maxWidth: 80),
                           filled: true,
@@ -103,6 +124,7 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         obscureText: true,
+                        validator: (value) => Validator.isValidPassword(value!),
                       ),
 
                       SizedBox(height: (22/height)*height),
@@ -121,8 +143,14 @@ class LoginPage extends StatelessWidget {
 
                       // Login Button
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          LoginUserModel? res = await performLogin(TextControllers.emailController.text.toString(), TextControllers.passwordController.text.toString());
+                          if (res != null) {
+                            state.validateLogin(res.msg, context);
 
+                          } else {
+                            state.validateLogin("Invalid Credentials!", context);
+                          }
                         },
                         child: Text('Login',style: Theme.of(context).textTheme.labelLarge,),
                       ),
@@ -132,11 +160,7 @@ class LoginPage extends StatelessWidget {
                       ElevatedButton.icon(
                         style: Theme.of(context).elevatedButtonTheme.style?.copyWith(backgroundColor: MaterialStateProperty.all<Color>(AppColors.textColor),),
                         onPressed: () async {
-                          // String? email = TextControllers.emailController.text.toString();
-                          // String? password = TextControllers.passwordController.text.toString();
-                          // await LoginUser().getToken(email, password);
-
-
+                              LoginUser().getToken(TextControllers.emailController.text.toString(), TextControllers.passwordController.text.toString());
                         },
                         icon: SvgPicture.asset('asset/icons/google.svg'),
                         label: Text('Continue with Google',style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.black),),

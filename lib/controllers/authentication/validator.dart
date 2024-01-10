@@ -16,6 +16,9 @@ class Validator {
     if (password.isEmpty) {
       return "Password Cannot be empty";
     }
+    if(password.length < 8){
+      return "Incorrect Password";
+    }
     return null;
   }
 

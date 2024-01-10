@@ -13,8 +13,8 @@ class LoginUserModel {
         this.success});
 
   LoginUserModel.fromJson(Map<String, dynamic> json) {
-    accessToken = json['accessToken'];
-    refreshToken = json['refreshToken'];
+    accessToken = json['access'];
+    refreshToken = json['refresh'];
     email = json['email'];
     msg = json['msg'];
     success = json['success'];
@@ -22,8 +22,8 @@ class LoginUserModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['accessToken'] = accessToken;
-    data['refreshToken'] = refreshToken;
+    data['access'] = accessToken;
+    data['refresh'] = refreshToken;
     data['email'] = email;
     data['msg'] = msg;
     data['success'] = success;

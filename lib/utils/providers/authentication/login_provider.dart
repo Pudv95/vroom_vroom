@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './validator.dart';
+import 'package:vroom_vroom/controllers/authentication/controllers.dart';
+import '../../../controllers/authentication/validator.dart';
 
 class LoginProvider extends ChangeNotifier {
 
@@ -50,7 +51,7 @@ class LoginProvider extends ChangeNotifier {
     } else {
       _emailError = '';
       _passwordError = '';
-        
+
     }
 
     notifyListeners();

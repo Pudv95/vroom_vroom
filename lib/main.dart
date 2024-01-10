@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:vroom_vroom/controllers/authentication/login_provider.dart';
+import 'package:vroom_vroom/utils/providers/authentication/login_provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/routes/app_routes.dart';
 
-void main() {
+void main() async {
+  await dotenv.load();
+  WidgetsFlutterBinding.ensureInitialized();
   return runApp(
       MultiProvider(
         providers: [

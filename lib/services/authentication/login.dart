@@ -1,99 +1,111 @@
-import 'dart:developer';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class LoginUser{
-  FlutterSecureStorage storage = const FlutterSecureStorage();
-  String baseUrl = DotEnv().get('BaseURL');
-  Dio dio = Dio();
+class LoginUser {
+  final String baseUrl = dotenv.get('BaseURL');
+  final storage = const FlutterSecureStorage();
 
-  Future<void> getToken(String email, String password) async {
+
+
+
+  Future<Map<String, dynamic>> getToken(String email, String password) async {
+    final String tokenGenerateUrl = '$baseUrl/auth/token/generate/';
     try {
-      Response response = await dio.post(
-        '$baseUrl/auth/token/generate/',
-        options: Options(
-          headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-        ),
-        data: {
+      final response = await http.post(
+        Uri.parse(tokenGenerateUrl),
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
           'email': email,
           'password': password,
-        },
+        }),
       );
+
       if (response.statusCode == 200) {
-        log('Login successful');
-        log('Token: ${response.data['token']}');
-        storage.write(key: 'accessToken', value: response.data['accessToken']);
-        storage.write(key: 'refreshToken', value: response.data['refreshToken']);
+        print('Login successful');
+        print('Token: ${response.body}');
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        data['success'] = true;
+        return data;
+      } else if (response.statusCode == 401) {
+        print('Login failed');
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        data['success'] = false;
+        return {
+          'success': false,
+          'msg': data['detail'],
+        };
       } else {
-        log('Login failed');
-        log('Error: ${response.data}');
+        throw Exception('Failed to login: ${response.body}');
       }
     } catch (error) {
-      log('Dio error: $error');
+      print('error: $error');
+      return {
+        'success': false,
+        'msg': error.toString(),
+      };
     }
   }
 
   Future<void> verifyToken(String token) async {
+    final String tokenVerifyUrl = '$baseUrl/auth/token/verify/';
     try {
-      Response response = await dio.post(
-        '$baseUrl/auth/token/verify/',
-        options: Options(
-          headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-        ),
-        data: {
-          'token': token,
+      final response = await http.post(
+        Uri.parse(tokenVerifyUrl),
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
         },
+        body: jsonEncode({
+          'token': token,
+        }),
       );
+
       if (response.statusCode == 200) {
-        log('Token verification successful');
+        print('Token verification successful');
       } else {
-        log('Token verification failed');
-        log('Error: ${response.data}');
-        //check for refresh token
-        String? token = await storage.read(key: 'refreshToken');
-        if(token != null){
-          await refreshToken(token);
-        }
-        else{
-          log('Try to login again');
+        print('Token verification failed');
+        print('Error: ${response.body}');
+        // check for refresh token
+        final refreshtoken = await storage.read(key: 'refreshToken');
+        if (refreshtoken != null) {
+          await refreshToken(refreshtoken);
+        } else {
+          print('Try to login again');
         }
       }
     } catch (error) {
-      log('Dio error: $error');
+      print('Http error: $error');
     }
   }
 
   Future<void> refreshToken(String refresh) async {
+    final String tokenRefreshUrl = '$baseUrl/auth/token/refresh/';
     try {
-      Response response = await dio.post(
-        '$baseUrl/auth/token/refresh/',
-        options: Options(
-          headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-        ),
-        data: {
-          'refresh': refresh,
+      final response = await http.post(
+        Uri.parse(tokenRefreshUrl),
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
         },
+        body: jsonEncode({
+          'refresh': refresh,
+        }),
       );
 
       if (response.statusCode == 200) {
-        log('Token refresh successful');
-        log('New access token: ${response.data['access']}');
+        print('Token refresh successful');
+        print('New access token: ${jsonDecode(response.body)['access']}');
       } else {
-        log('Token refresh failed');
-        log('Error: ${response.data}');
+        print('Token refresh failed');
+        print('Error: ${response.body}');
       }
     } catch (error) {
-      log('Dio error: $error');
+      print('Http error: $error');
     }
   }
 }
