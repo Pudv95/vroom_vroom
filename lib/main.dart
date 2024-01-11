@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/forgot_password_provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/login_provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
+import 'package:vroom_vroom/utils/providers/authentication/verify_otp_provider.dart';
 import 'package:vroom_vroom/utils/routes/app_routes.dart';
 
 void main() async {
@@ -13,7 +14,8 @@ void main() async {
       MultiProvider(
         providers: [
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-        ChangeNotifierProvider(create: (context) => ForgotPasswordProvider())
+        ChangeNotifierProvider(create: (context) => ForgotPasswordProvider()),
+        ChangeNotifierProvider(create: (context) => VerifyOTPProvider()),
       ],child: MaterialApp.router(
         // theme: ThemeData(),
         darkTheme: ThemeData.dark().copyWith(

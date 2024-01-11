@@ -5,7 +5,7 @@ import 'package:vroom_vroom/views/screens/authentication/signup/verify_otp.dart'
 
 class VerifyCredentials extends StatelessWidget {
   VerifyCredentials({super.key});
-  final List<Widget> credPage = [Credentials(),const VerifyOTP(isEmail: true)];
+  final List<Widget> credPage = [Credentials(),VerifyOTP(isEmail: true)];
   @override
   Widget build(BuildContext context) {
     return PageView.builder(

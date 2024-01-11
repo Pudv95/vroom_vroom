@@ -32,4 +32,14 @@ class Validator {
     }
   }
 
+  static String? isValidOTP(String otp){
+    if (otp.isEmpty) {
+      return "Please Enter OTP";
+    }
+    if(otp.length < 6){
+      return "Enter Valid OTP";
+    }
+    return null;
+  }
+
 }
