@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class Verification {
   final String baseUrl = dotenv.get('BaseURL');
 
-  verifyOTP(String token, String otp) async {
+  verifyOTP(String otp, String token) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/auth/reset/verify-otp/'),
@@ -20,13 +20,19 @@ class Verification {
         }),
       );
       print(jsonDecode(response.body));
+      Map data = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
-        print('OTP verified successfully');
+        data['success'] = true;
+        return data;
+
       } else {
         // OTP verification failed
         print('OTP verification failed. Status Code: ${response.statusCode}');
         print('Response Body: ${response.body}');
+        return {
+          'success': false,
+          'msg':data['error']
+        };
       }
     } catch (e) {
       print('Error during OTP verification: $e');

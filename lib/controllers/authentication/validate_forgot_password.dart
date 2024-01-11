@@ -15,8 +15,6 @@ Future<ForgotPasswordModel?> validOTPRequest(String requirement) async {
       print('msg: ${forgotPasswordModel.msg}');
       return forgotPasswordModel;
     } else {
-
-      print('Login failed with error: Something went wrong.');
       return forgotPasswordModel;
     }
   } catch (error) {

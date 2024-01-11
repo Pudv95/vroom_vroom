@@ -7,8 +7,6 @@ import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/providers/authentication/forgot_password_provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/verify_otp_provider.dart';
 
-import '../../../../models/authentication/forget_password_model.dart';
-
 class VerifyOTP extends StatelessWidget {
   final bool isEmail;
   final bool isLoggingIn;
@@ -68,14 +66,18 @@ class VerifyOTP extends StatelessWidget {
         Form(
           key: state.formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: Pinput(
-            errorText: (state.otpError == '')?null:state.otpError,
-            onChanged: (value) => state.setOTP(value),
-            defaultPinTheme: defaultPinTheme,
-            focusedPinTheme: focusedPinTheme,
-            errorPinTheme: errorPinTheme,
-            validator: (value) => Validator.isValidOTP(value!),
-            length: 6,
+          child: Consumer<VerifyOTPProvider>(builder: (BuildContext context, value, Widget? child) {
+            return Pinput(
+              errorText: (state.otpError == '')?null:state.otpError,
+              onChanged: (value) => state.setOTP(value),
+              defaultPinTheme: defaultPinTheme,
+              focusedPinTheme: focusedPinTheme,
+              errorPinTheme: errorPinTheme,
+              validator: (value) => Validator.isValidOTP(value!),
+              length: 6,
+            );
+          },
+
           ),
         ),
         SizedBox(
@@ -106,12 +108,16 @@ class VerifyOTP extends StatelessWidget {
         ElevatedButton(onPressed: () async {
           if(state.formKey.currentState!.validate()){
             if(isLoggingIn){
-              Map data = validateOTP(state.otp, state1.model.forgotPasswordToken!);
+              print(state1.model.forgotPasswordToken);
+              Map<String,dynamic> data = await validateOTP(state.otp, state1.model.forgotPasswordToken!);
+              print(data);
               if(data['success']){
                 state.validateOTP(data['msg'], context);
+                print("-------------------------->${state.otpError}");
               }
               else{
                 state.validateOTP(data['msg'], context);
+                print("-------------------------->${state.otpError}");
               }
               return;
             }

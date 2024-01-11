@@ -84,6 +84,7 @@ class OTPRequirement extends StatelessWidget {
           if(_formKey.currentState!.validate()){
             print('here');
             ForgotPasswordModel? res = await validOTPRequest(state.requirementField);
+            state.setForgetPassModel(res);
             print(res?.toJson());
             if (res != null) {
               state.validateRequirement(res.msg, context);

@@ -11,8 +11,6 @@ validateOTP(String otp,String token) async {
       print('msg: ${responseData['msg']}');
       return responseData;
     } else {
-
-      print('Login failed with error: Something went wrong.');
       return responseData;
     }
   } catch (error) {
