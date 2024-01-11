@@ -4,7 +4,7 @@ class Validator {
     if (email.isEmpty) {
       return "Email cannot be empty";
     }
-    final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@akgec\.ac\.in$', caseSensitive: false);
     bool isValidFormat = emailRegex.hasMatch(email);
     if (!isValidFormat) {
       return "Invalid email format";
