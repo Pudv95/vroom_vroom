@@ -26,15 +26,17 @@ class SignUpUser {
         body: jsonEncode(body),
       );
       Map data = jsonDecode(response.body);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         print('User registration successful');
         data['success'] = true;
         return data;
       } else {
         print('User registration failed. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
-        data['success'] = false;
-        return data;
+        return {
+          'success':false,
+          'message':(data['error']??false)?data['error']:(data['password']??false)?data['password'][0]:'',
+        };
       }
     } catch (error) {
       print('Error during user registration: $error');

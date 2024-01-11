@@ -25,9 +25,9 @@ class SignUp extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.fromLTRB(
                 (20 / width) * width, 0, (20 / width) * width, 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: ListView(
+              // mainAxisSize: MainAxisSize.max,
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Spacer(),
                 Center(

@@ -5,6 +5,7 @@ import 'package:vroom_vroom/utils/providers/authentication/forgot_password_provi
 import 'package:vroom_vroom/utils/providers/authentication/login_provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/providers/authentication/reset_password_provider.dart';
+import 'package:vroom_vroom/utils/providers/authentication/signup_provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/verify_otp_provider.dart';
 import 'package:vroom_vroom/utils/routes/app_routes.dart';
 
@@ -18,6 +19,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => ForgotPasswordProvider()),
         ChangeNotifierProvider(create: (context) => VerifyOTPProvider()),
         ChangeNotifierProvider(create: (context) => ResetPasswordProvider()),
+        ChangeNotifierProvider(create: (context) => SignUpProvider()),
       ],child: MaterialApp.router(
         // theme: ThemeData(),
         darkTheme: ThemeData.dark().copyWith(

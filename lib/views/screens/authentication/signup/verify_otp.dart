@@ -73,6 +73,7 @@ class VerifyOTP extends StatelessWidget {
               defaultPinTheme: defaultPinTheme,
               focusedPinTheme: focusedPinTheme,
               errorPinTheme: errorPinTheme,
+              forceErrorState: true,
               validator: (value) => Validator.isValidOTP(value!),
               length: 6,
             );
