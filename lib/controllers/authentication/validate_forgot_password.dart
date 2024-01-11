@@ -1,5 +1,5 @@
 import 'package:vroom_vroom/models/authentication/forget_password_model.dart';
-import 'package:vroom_vroom/services/authentication/reset_passoword.dart';
+import 'package:vroom_vroom/services/authentication/send_otp.dart';
 
 Future<ForgotPasswordModel?> validOTPRequest(String requirement) async {
   try {

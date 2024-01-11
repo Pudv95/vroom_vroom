@@ -9,9 +9,16 @@ class VerifyOTPProvider extends ChangeNotifier {
 
   String _otp = '';
   String _otpError = '';
+  String _token = "";
 
   String get otp => _otp;
   String get otpError => _otpError;
+  String get token => _token;
+
+  void setToken(String token){
+    _token=token;
+    notifyListeners();
+  }
 
   void setOTP(String value) {
     _otp = value;

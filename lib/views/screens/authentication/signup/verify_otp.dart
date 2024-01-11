@@ -113,6 +113,7 @@ class VerifyOTP extends StatelessWidget {
               print(data);
               if(data['success']){
                 state.validateOTP(data['msg'], context);
+                state.setToken(data['token']);
                 print("-------------------------->${state.otpError}");
               }
               else{
