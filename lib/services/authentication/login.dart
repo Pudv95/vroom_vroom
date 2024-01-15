@@ -25,7 +25,6 @@ class LoginUser {
           'password': password,
         }),
       );
-
       if (response.statusCode == 200) {
         print('Login successful');
         print('Token: ${response.body}');
@@ -108,5 +107,13 @@ class LoginUser {
     } catch (error) {
       print('Http error: $error');
     }
+  }
+
+
+  getAccessToken(){
+    // storage se read kar k dega
+    // nahi hai to
+    // refresh token se laayega
+    // nahi mila to login page pe phek dega
   }
 }

@@ -3,8 +3,11 @@ import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import 'package:vroom_vroom/controllers/authentication/validate_otp.dart';
 import 'package:vroom_vroom/controllers/authentication/validator.dart';
+import 'package:vroom_vroom/models/authentication/signup_model.dart';
+import 'package:vroom_vroom/services/authentication/verify_credentials.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/providers/authentication/forgot_password_provider.dart';
+import 'package:vroom_vroom/utils/providers/authentication/signup_provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/verify_otp_provider.dart';
 
 class VerifyOTP extends StatelessWidget {
@@ -16,6 +19,7 @@ class VerifyOTP extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<VerifyOTPProvider>();
     final state1 = context.watch<ForgotPasswordProvider>();
+    final signUpState = context.watch<SignUpProvider>();
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
@@ -73,12 +77,11 @@ class VerifyOTP extends StatelessWidget {
               defaultPinTheme: defaultPinTheme,
               focusedPinTheme: focusedPinTheme,
               errorPinTheme: errorPinTheme,
-              forceErrorState: true,
+              forceErrorState: (state.otpError == '')?false:true,
               validator: (value) => Validator.isValidOTP(value!),
               length: 6,
             );
           },
-
           ),
         ),
         SizedBox(
@@ -112,20 +115,27 @@ class VerifyOTP extends StatelessWidget {
               print(state1.model.forgotPasswordToken);
               Map<String,dynamic> data = await validateOTP(state.otp, state1.model.forgotPasswordToken!);
               print(data);
-              if(data['success']){
-                state.validateOTP(data['msg'], context);
-                state.setToken(data['token']);
-                print("-------------------------->${state.otpError}");
+              if(context.mounted){
+                if(data['success']){
+                  state.validateOTP(data['msg'], context);
+                  state.setToken(data['token']);
+                }
+                else{
+                  state.validateOTP(data['msg'], context);
+                }
               }
-              else{
-                state.validateOTP(data['msg'], context);
-                print("-------------------------->${state.otpError}");
-              }
-              return;
             }
-            // isEmail?
-            // PageControllers.signUpController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Easing.linear)
-            //     :PageControllers.signUpController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Easing.linear);
+            else{
+                SignUpModel user = signUpState.user;
+                if(isEmail){
+                  String? success =  await VerifyCredentials(otp: state.otp, email: user.email, number: user.number).verifyEmail();
+                  state.validateOTP(success, context,loggingIn: false);
+                }
+                else{
+                  String? success = await VerifyCredentials(otp: state.otp, email: user.email, number: user.number).verifyEmail();
+                  state.validateOTP(success, context,loggingIn: false);
+                }
+            }
           }
         }, child: Text('Confirm',style: Theme.of(context).textTheme.labelLarge,))
 

@@ -9,6 +9,7 @@ class SignUpModel {
   bool? termsAndConditions;
   String? accessToken;
   String? refreshToken;
+  String? number;
 
   SignUpModel({
     required this.name,
@@ -20,7 +21,8 @@ class SignUpModel {
     required this.message,
     this.termsAndConditions = true,
     required this.refreshToken,
-    required this.accessToken
+    required this.accessToken,
+    required this.number
   });
 
   factory SignUpModel.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class SignUpModel {
       name: json['name'],
       email: json['email'],
       password: json['password'],
+      number: json['number'],
       termsAndConditions: json['tnc'],
       gender: json['gender'],
       age: json['age'],
@@ -47,6 +50,7 @@ class SignUpModel {
       'password': password,
       'gender': gender,
       'age': age,
+      'number':number,
       'tnc': termsAndConditions,
       'success': success,
       'message': message

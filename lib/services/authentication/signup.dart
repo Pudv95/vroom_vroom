@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SignUpUser {
   final String baseUrl = dotenv.get('BaseURL');
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
 
   Map<String, String> headers = {
     'accept': 'application/json',
@@ -12,7 +14,6 @@ class SignUpUser {
 
   registerNewUser(String email, String password) async {
     final String url = '$baseUrl/auth/register/';
-
 
     final Map<String, String> body = {
       'email': email,
@@ -34,8 +35,12 @@ class SignUpUser {
         print('User registration failed. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
         return {
-          'success':false,
-          'message':(data['error']??false)?data['error']:(data['password']??false)?data['password'][0]:'',
+          'success': false,
+          'message': (data['error'] ?? false)
+              ? data['error']
+              : (data['password'] ?? false)
+                  ? data['password'][0]
+                  : '',
         };
       }
     } catch (error) {
@@ -45,7 +50,6 @@ class SignUpUser {
 
   updateUser(String name, int age, String gender) async {
     final String url = '$baseUrl/details/user/';
-
 
     final Map<String, dynamic> body = {
       'name': name,
@@ -65,7 +69,8 @@ class SignUpUser {
         data['success'] = true;
         return data;
       } else {
-        print('User details update failed. Status code: ${response.statusCode}');
+        print(
+            'User details update failed. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
         data['success'] = false;
         return data;
@@ -74,5 +79,4 @@ class SignUpUser {
       print('Error during user details update: $error');
     }
   }
-
 }

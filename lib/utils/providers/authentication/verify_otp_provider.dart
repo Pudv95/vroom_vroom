@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vroom_vroom/controllers/authentication/controllers.dart';
 
 class VerifyOTPProvider extends ChangeNotifier {
 
@@ -25,14 +26,20 @@ class VerifyOTPProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void validateOTP(String? apiErrorMessage, BuildContext context) {
+  void validateOTP(String? apiErrorMessage, BuildContext context,
+      {loggingIn = true}) {
     _otpError = '';
 
     if (apiErrorMessage != null && apiErrorMessage.isNotEmpty) {
       _otpError = apiErrorMessage;
     } else {
       _otpError = '';
-      context.go('/forgot_password/reset_password');
+      if(loggingIn) {
+        context.go('/forgot_password/reset_password');
+      }
+      else{
+        PageControllers.signUpController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Easing.linear);
+      }
     }
 
     notifyListeners();

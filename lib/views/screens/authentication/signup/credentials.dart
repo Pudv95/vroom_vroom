@@ -90,7 +90,8 @@ class Credentials extends StatelessWidget {
             onPressed: () async {
               if(state.formKey.currentState!.validate()){
                 SignUpModel signUpModel = await createUser(state.email, state.password);
-                print(signUpModel.toJson());
+                signUpModel.email = state.email;
+                state.setUser(signUpModel);
                 state.validateSignUp(signUpModel.message);
               }
             },

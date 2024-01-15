@@ -7,6 +7,7 @@ import 'package:vroom_vroom/controllers/authentication/controllers.dart';
 import 'package:vroom_vroom/controllers/authentication/validate_login.dart';
 import 'package:vroom_vroom/controllers/authentication/validator.dart';
 import 'package:vroom_vroom/models/authentication/login_model.dart';
+import 'package:vroom_vroom/services/authentication/google_o_auth.dart';
 import 'package:vroom_vroom/services/authentication/login.dart';
 import 'package:vroom_vroom/utils/providers/authentication/login_provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
@@ -161,7 +162,9 @@ class LoginPage extends StatelessWidget {
 
                       ElevatedButton.icon(
                         style: Theme.of(context).elevatedButtonTheme.style?.copyWith(backgroundColor: MaterialStateProperty.all<Color>(AppColors.textColor),),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          await GoogleAuth().handleSignIn();
+                        },
                         icon: SvgPicture.asset('asset/icons/google.svg'),
                         label: Text('Continue with Google',style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.black),),
                       ),

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 
 class GoogleAuth{
-  final GoogleSignIn _googleSignIn = GoogleSignIn(clientId: "246425352710-3baoaucunt65jrkhrs39fimr17iemkup.apps.googleusercontent.com ");
+  final GoogleSignIn _googleSignIn = GoogleSignIn(clientId: "246425352710-3baoaucunt65jrkhrs39fimr17iemkup.apps.googleusercontent.com");
 
   Future<void> handleSignIn() async {
     try {

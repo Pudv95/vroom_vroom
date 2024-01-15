@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vroom_vroom/controllers/authentication/validator.dart';
+import 'package:vroom_vroom/models/authentication/signup_model.dart';
 
 import '../../../controllers/authentication/controllers.dart';
 
@@ -13,6 +14,7 @@ class SignUpProvider extends ChangeNotifier {
   String _passwordError = '';
   String _gender = '';
   String _age = '';
+  SignUpModel _model = SignUpModel(name: '', email: '', password: [], gender: '', age: '', success: null, message: '', refreshToken: '', accessToken: '', number: '');
 
   String get email => _email;
   String get password => _password;
@@ -20,10 +22,16 @@ class SignUpProvider extends ChangeNotifier {
   String get passwordError => _passwordError;
   String get gender => _gender;
   String get age => _age;
+  SignUpModel get user => _model;
 
   void setEmail(String value) {
     _email = value;
     _emailError = Validator.isValidEmail(value) ?? '';
+    notifyListeners();
+  }
+
+  void setUser(SignUpModel user){
+    _model = user;
     notifyListeners();
   }
 
