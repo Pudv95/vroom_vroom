@@ -3,10 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:vroom_vroom/controllers/authentication/controllers.dart';
 
 class VerifyOTPProvider extends ChangeNotifier {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState> get formKey => _formKey;
-
 
   String _otp = '';
   String _otpError = '';
@@ -16,8 +14,8 @@ class VerifyOTPProvider extends ChangeNotifier {
   String get otpError => _otpError;
   String get token => _token;
 
-  void setToken(String token){
-    _token=token;
+  void setToken(String token) {
+    _token = token;
     notifyListeners();
   }
 
@@ -27,18 +25,23 @@ class VerifyOTPProvider extends ChangeNotifier {
   }
 
   void validateOTP(String? apiErrorMessage, BuildContext context,
-      {loggingIn = true}) {
+      {loggingIn = true, isEmail = true}) {
     _otpError = '';
 
     if (apiErrorMessage != null && apiErrorMessage.isNotEmpty) {
       _otpError = apiErrorMessage;
     } else {
       _otpError = '';
-      if(loggingIn) {
+      if (loggingIn) {
         context.go('/forgot_password/reset_password');
-      }
-      else{
-        PageControllers.signUpController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Easing.linear);
+      } else {
+        (isEmail)
+            ? PageControllers.signUpController.animateToPage(1,
+                duration: const Duration(milliseconds: 500),
+                curve: Easing.linear)
+            : PageControllers.signUpController.animateToPage(2,
+                duration: const Duration(milliseconds: 500),
+                curve: Easing.linear);
       }
     }
 

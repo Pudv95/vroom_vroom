@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:vroom_vroom/controllers/authentication/controllers.dart';
 import 'package:vroom_vroom/controllers/authentication/validate_forgot_password.dart';
 import 'package:vroom_vroom/controllers/authentication/validator.dart';
 import 'package:vroom_vroom/models/authentication/forget_password_model.dart';
+import 'package:vroom_vroom/models/authentication/signup_model.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/providers/authentication/forgot_password_provider.dart';
+import 'package:vroom_vroom/utils/providers/authentication/signup_provider.dart';
+import 'package:vroom_vroom/services/authentication/verify_credentials.dart';
 
 class OTPRequirement extends StatelessWidget {
   final bool isEmail;
@@ -17,6 +19,7 @@ class OTPRequirement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<ForgotPasswordProvider>();
+    final state1 = context.watch<SignUpProvider>();
     double height = MediaQuery.sizeOf(context).height;
     return ListView(
       children: [
@@ -82,15 +85,24 @@ class OTPRequirement extends StatelessWidget {
         ),
         ElevatedButton(onPressed: ()async{
           if(_formKey.currentState!.validate()){
-            print('here');
-            ForgotPasswordModel? res = await validOTPRequest(state.requirementField);
-            state.setForgetPassModel(res);
-            print(res?.toJson());
-            if (res != null) {
-              state.validateRequirement(res.msg, context);
+            if(isLoggingIn){
+              print('here');
+              ForgotPasswordModel? res = await validOTPRequest(state.requirementField);
+              state.setForgetPassModel(res);
+              print(res?.toJson());
+              if (res != null) {
+                state.validateRequirement(res.msg, context);
 
-            } else {
-              state.validateRequirement("User doesn\'t exist!", context);
+              } else {
+                state.validateRequirement("User doesn\'t exist!", context);
+              }
+            }
+            else{
+                SignUpModel user = state1.user;
+                print(user.toJson());
+                user.number = state.requirementField;
+                String? message = await VerifyCredentials(otp: '',email: '',number: state.requirementField).sendVerificationOTPToNumber(user.accessToken);
+                state.validateRequirement(message, context);
             }
           }
         }, child: Text('Next',style: Theme.of(context).textTheme.labelLarge,))

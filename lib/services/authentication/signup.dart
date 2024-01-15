@@ -31,7 +31,14 @@ class SignUpUser {
         print('User registration successful');
         data['success'] = true;
         return data;
-      } else {
+      }
+      else if(response.statusCode == 400){
+        return {
+          'success' : false,
+          'message' : 'User With That Email Already Exists'
+        };
+      }
+      else {
         print('User registration failed. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
         return {

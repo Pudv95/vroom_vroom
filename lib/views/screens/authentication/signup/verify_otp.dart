@@ -110,8 +110,10 @@ class VerifyOTP extends StatelessWidget {
             )),
         SizedBox(height: (22/height)*height,),
         ElevatedButton(onPressed: () async {
+          // print('asdfsadfasddfadfsafsafasdfdasdf');
           if(state.formKey.currentState!.validate()){
             if(isLoggingIn){
+              print('logging in');
               print(state1.model.forgotPasswordToken);
               Map<String,dynamic> data = await validateOTP(state.otp, state1.model.forgotPasswordToken!);
               print(data);
@@ -127,13 +129,17 @@ class VerifyOTP extends StatelessWidget {
             }
             else{
                 SignUpModel user = signUpState.user;
+                print('signing up');
                 if(isEmail){
                   String? success =  await VerifyCredentials(otp: state.otp, email: user.email, number: user.number).verifyEmail();
                   state.validateOTP(success, context,loggingIn: false);
                 }
                 else{
-                  String? success = await VerifyCredentials(otp: state.otp, email: user.email, number: user.number).verifyEmail();
-                  state.validateOTP(success, context,loggingIn: false);
+                  print('herer');
+                  String? success = await VerifyCredentials(otp: state.otp, email: user.email, number: user.number).verifyPhone();
+                  print(success);
+                  print(user.toJson());
+                  state.validateOTP(success, context,loggingIn: false,isEmail: false);
                 }
             }
           }
@@ -143,3 +149,4 @@ class VerifyOTP extends StatelessWidget {
     );
   }
 }
+

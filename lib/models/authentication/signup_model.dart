@@ -36,8 +36,8 @@ class SignUpModel {
       age: json['age'],
       success: json['success'],
       message: json['message'],
-      refreshToken: json['access_token'],
-      accessToken: json['refresh_token'],
+      accessToken: json['access_token'],
+      refreshToken: json['refresh_token'],
     );
   }
 

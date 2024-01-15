@@ -12,11 +12,49 @@ class VerifyCredentials{
   final storage = const FlutterSecureStorage();
 
 
-    VerifyCredentials({required this.otp,required this.email,required this.number});
+  VerifyCredentials({required this.otp,required this.email,required this.number});
+
+  Future<String?> sendVerificationOTPToNumber(String? token) async {
+    number = "+91$number";
+    print(number);
+    print(token);
+    final url = '$baseUrl/auth/send-phone-verification/';
+
+    final headers = {
+      'accept': 'application/json',
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    final body = jsonEncode({
+      'phone_number': number,
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        print('OTP sent successfully to $number');
+        print('Response: ${response.body}');
+        return null;
+      } else {
+        print('Failed to send OTP to $number. Status code: ${response.statusCode}');
+        print('Response: ${response.body}');
+        return 'Number Already verified';
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+    return null;
+  }
 
   verifyPhone() async {
 
-    final accessToken = await storage.read(key: 'refreshToken');
+    String? accessToken = await storage.read(key: 'accessToken');
 
     final Uri uri = Uri.parse("$baseUrl/auth/verify-phone/");
     final Map<String, String> headers = {
@@ -32,9 +70,10 @@ class VerifyCredentials{
     try {
       final http.Response response = await http.post(uri, headers: headers, body: jsonEncode(data));
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return null;
       } else {
+        print(response.body);
         return 'Invalid OTP';
       }
     } catch (e) {
@@ -44,7 +83,7 @@ class VerifyCredentials{
 
   verifyEmail() async {
 
-    final accessToken = await storage.read(key: 'refreshToken');
+    final accessToken = await storage.read(key: 'accessToken');
     final Uri uri = Uri.parse("$baseUrl/auth/verify-email/");
     final Map<String, String> headers = {
       'accept': 'application/json',
@@ -59,7 +98,7 @@ class VerifyCredentials{
     try {
       final http.Response response = await http.post(uri, headers: headers, body: jsonEncode(data));
       print(response.body);
-      if (response.statusCode ==   201) {
+      if (response.statusCode ==  200 || response.statusCode == 400 && jsonDecode(response.body)['message'] == 'Email is Already Verified.' ) {
         print('herere');
         return null;
       } else {
