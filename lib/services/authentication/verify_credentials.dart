@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'login.dart';
 
 class VerifyCredentials{
   String otp;
@@ -14,7 +17,8 @@ class VerifyCredentials{
 
   VerifyCredentials({required this.otp,required this.email,required this.number});
 
-  Future<String?> sendVerificationOTPToNumber(String? token) async {
+  Future<String?> sendVerificationOTPToNumber(BuildContext context) async {
+    final String token = LoginUser().getAccessToken(context);
     number = "+91$number";
     print(number);
     print(token);
@@ -52,9 +56,9 @@ class VerifyCredentials{
     return null;
   }
 
-  verifyPhone() async {
+  verifyPhone(BuildContext context) async {
 
-    String? accessToken = await storage.read(key: 'accessToken');
+    final String accessToken = LoginUser().getAccessToken(context);
 
     final Uri uri = Uri.parse("$baseUrl/auth/verify-phone/");
     final Map<String, String> headers = {
@@ -81,9 +85,10 @@ class VerifyCredentials{
     }
   }
 
-  verifyEmail() async {
+  verifyEmail(BuildContext context) async {
 
-    final accessToken = await storage.read(key: 'accessToken');
+    final String accessToken = LoginUser().getAccessToken(context);
+
     final Uri uri = Uri.parse("$baseUrl/auth/verify-email/");
     final Map<String, String> headers = {
       'accept': 'application/json',

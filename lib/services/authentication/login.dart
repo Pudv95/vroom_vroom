@@ -10,8 +10,6 @@ class LoginUser {
   final storage = const FlutterSecureStorage();
 
 
-
-
   Future<Map<String, dynamic>> getToken(String email, String password) async {
     email.trim();
     final String tokenGenerateUrl = '$baseUrl/auth/token/generate/';

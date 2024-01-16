@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:vroom_vroom/services/authentication/verify_otps.dart';
 
-validateOTP(String otp,String token) async {
+validateOTP(String otp,BuildContext context) async {
   try {
     final Map<String, dynamic> responseData = await Verification().verifyOTP(
-        otp, token
+        otp, context
     );
 
     if (responseData['success']) {

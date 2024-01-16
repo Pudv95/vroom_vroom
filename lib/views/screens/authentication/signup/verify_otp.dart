@@ -115,7 +115,7 @@ class VerifyOTP extends StatelessWidget {
             if(isLoggingIn){
               print('logging in');
               print(state1.model.forgotPasswordToken);
-              Map<String,dynamic> data = await validateOTP(state.otp, state1.model.forgotPasswordToken!);
+              Map<String,dynamic> data = await validateOTP(state.otp, context);
               print(data);
               if(context.mounted){
                 if(data['success']){
@@ -131,12 +131,12 @@ class VerifyOTP extends StatelessWidget {
                 SignUpModel user = signUpState.user;
                 print('signing up');
                 if(isEmail){
-                  String? success =  await VerifyCredentials(otp: state.otp, email: user.email, number: user.number).verifyEmail();
+                  String? success =  await VerifyCredentials(otp: state.otp, email: user.email, number: user.number).verifyEmail(context);
                   state.validateOTP(success, context,loggingIn: false);
                 }
                 else{
                   print('herer');
-                  String? success = await VerifyCredentials(otp: state.otp, email: user.email, number: user.number).verifyPhone();
+                  String? success = await VerifyCredentials(otp: state.otp, email: user.email, number: user.number).verifyPhone(context);
                   print(success);
                   print(user.toJson());
                   state.validateOTP(success, context,loggingIn: false,isEmail: false);

@@ -1,12 +1,16 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+
+import 'login.dart';
 
 class Verification {
   final String baseUrl = dotenv.get('BaseURL');
 
-  verifyOTP(String otp, String token) async {
+  verifyOTP(String otp,BuildContext context) async {
+    final String token = LoginUser().getAccessToken(context);
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/auth/reset/verify-otp/'),

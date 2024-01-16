@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
-addUserDetails(String name, int age, String gender, String token) async {
+import 'login.dart';
+
+addUserDetails(String name, int age, String gender,BuildContext context) async {
+  final String token = LoginUser().getAccessToken(context);
   if(gender == 'Male') gender = 'M';
   if(gender == 'Female') gender = 'F';
   if(gender == 'Other') gender = 'O';

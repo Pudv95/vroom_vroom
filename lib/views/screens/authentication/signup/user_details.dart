@@ -156,7 +156,7 @@ class _UserDetailsState extends State<UserDetails> {
         ElevatedButton(
             onPressed: () async {
               print(state.user.toJson());
-               String? success = await addUserDetails(state.user.name ?? 'Paras', 10, state.user.gender!, state.user.accessToken!);
+               String? success = await addUserDetails(state.user.name ?? 'Paras', 10, state.user.gender!,context);
                if(success != null){
                  print('couldn\'t process');
                }

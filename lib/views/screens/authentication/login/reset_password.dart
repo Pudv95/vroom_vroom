@@ -123,7 +123,7 @@ class ResetPassword extends StatelessWidget {
                   onPressed: () async {
                     if(state.formKey.currentState!.validate()){
                       print(state1.token);
-                      Map<String,dynamic> data = await CreateNewPassword().resetPassword(state.password, state1.token);
+                      Map<String,dynamic> data = await CreateNewPassword().resetPassword(state.password, context);
                       print(data);
                       if(data['success']){
                         state.validateOTP(data['msg'], context);
