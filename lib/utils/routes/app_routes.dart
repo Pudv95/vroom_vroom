@@ -8,6 +8,8 @@ import 'package:vroom_vroom/views/screens/authentication/signup/signup.dart';
 import 'package:vroom_vroom/views/screens/authentication/signup/user_details.dart';
 import 'package:vroom_vroom/views/screens/authentication/signup/verify_otp.dart';
 import 'package:vroom_vroom/views/screens/authentication/signup/verify_number.dart';
+import 'package:vroom_vroom/views/screens/home/dashboard.dart';
+import 'package:vroom_vroom/views/screens/splash_screen.dart';
 
 CustomTransitionPage customTransition<T>({
   required BuildContext context,
@@ -33,8 +35,14 @@ CustomTransitionPage customTransition<T>({
 
 final GoRouter routes = GoRouter(
   routes: <GoRoute>[
+    //SplashScreen
+    GoRoute(path: '/',builder: (BuildContext context, GoRouterState state){
+      return const SplashScreen();
+    }),
+
+    // Login
     GoRoute(
-      path: '/',
+      path: '/login',
       builder: (BuildContext context, GoRouterState state) {
         return const LoginPage();
       },
@@ -71,6 +79,7 @@ final GoRouter routes = GoRouter(
       ]
     ),
 
+    // SignUP
     GoRoute(
       path: '/signup',
       builder: (BuildContext context, GoRouterState state) {
@@ -78,35 +87,11 @@ final GoRouter routes = GoRouter(
       },
       pageBuilder: (context, state) =>
           customTransition(context: context, state: state, child: SignUp()),
-      // routes: [
-      //   GoRoute(
-      //     path: 'send_otp',
-      //     builder: (BuildContext context, GoRouterState state) {
-      //       // return SendOTP();
-      //       return const Placeholder();
-      //     },
-      //     pageBuilder: (context, state) => customTransition(
-      //         context: context, state: state, child: const Placeholder()),
-      //     routes: [
-      //       GoRoute(
-      //         path: 'verify_otp',
-      //         builder: (BuildContext context, GoRouterState state) {
-      //           return const VerifyNumber();
-      //         },
-      //         pageBuilder: (context, state) => customTransition(
-      //             context: context, state: state, child: const VerifyNumber()),
-      //       ),
-      //     ],
-      //   ),
-      //   GoRoute(
-      //     path: 'details',
-      //     builder: (BuildContext context, GoRouterState state) {
-      //       return const UserDetails();
-      //     },
-      //     pageBuilder: (context, state) => customTransition(
-      //         context: context, state: state, child: const UserDetails()),
-      //   ),
-      // ],
     ),
+
+    // Home
+    GoRoute(path: '/dashboard',builder: (BuildContext context, GoRouterState state){
+      return const Dashboard();
+    }),
   ],
 );
