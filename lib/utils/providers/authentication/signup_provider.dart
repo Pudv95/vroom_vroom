@@ -12,16 +12,12 @@ class SignUpProvider extends ChangeNotifier {
   String _password = '';
   String _emailError = '';
   String _passwordError = '';
-  String _gender = '';
-  String _age = '';
   SignUpModel _model = SignUpModel(name: '', email: '', password: [], gender: '', age: '', success: null, message: '', refreshToken: '', accessToken: '', number: '');
 
   String get email => _email;
   String get password => _password;
   String get emailError => _emailError;
   String get passwordError => _passwordError;
-  String get gender => _gender;
-  String get age => _age;
   SignUpModel get user => _model;
 
   void setEmail(String value) {
@@ -36,11 +32,15 @@ class SignUpProvider extends ChangeNotifier {
   }
 
   void setGender(gender){
-    _gender = gender;
+    user.gender = gender;
     notifyListeners();
   }
-  void setAge(){
-    _age = age;
+  void setAge(age){
+    user.age = age;
+    notifyListeners();
+  }
+  void setName(name){
+    user.name = name;
     notifyListeners();
   }
 
