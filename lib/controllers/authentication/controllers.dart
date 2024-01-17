@@ -13,6 +13,15 @@ class PageControllers{
 }
 
 class TextControllers{
+  //Login Controllers
+  static final TextEditingController emailController = TextEditingController();
+  static final TextEditingController passwordController = TextEditingController();
 
+  //Signup Controllers
+
+  void dispose(){
+    emailController.dispose();
+    passwordController.dispose();
+  }
 
 }

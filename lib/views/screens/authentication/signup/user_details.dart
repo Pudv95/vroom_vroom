@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:vroom_vroom/services/authentication/user_details.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
+import 'package:vroom_vroom/utils/providers/authentication/signup_provider.dart';
 
 class UserDetails extends StatefulWidget {
   const UserDetails({super.key});
@@ -18,7 +22,7 @@ class _UserDetailsState extends State<UserDetails> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
-
+    final state = context.watch<SignUpProvider>();
     return Column(
       children: [
         SizedBox(
@@ -46,6 +50,7 @@ class _UserDetailsState extends State<UserDetails> {
           height: (71 / height) * height,
         ),
         TextFormField(
+          onChanged: (value) => state.setName(value),
           decoration: InputDecoration(
             labelText: '   Name',
             filled: true,
@@ -95,7 +100,7 @@ class _UserDetailsState extends State<UserDetails> {
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: (value) {},
+                  onChanged: (value) => state.setGender(value),
                   dropdownColor: AppColors.secondaryColor,
                 ),
               ),
@@ -132,15 +137,15 @@ class _UserDetailsState extends State<UserDetails> {
                         child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.vertical(
-                                top: ages.indexOf(value) == 0 ? Radius.zero : Radius.circular(20.0),
-                                bottom: ages.indexOf(value) == ages.length - 1 ? Radius.zero : Radius.circular(20.0),
+                                top: ages.indexOf(value) == 0 ? Radius.zero : const Radius.circular(20.0),
+                                bottom: ages.indexOf(value) == ages.length - 1 ? Radius.zero : const Radius.circular(20.0),
                               ),
                             ),
                             child: Text(value)
                         ),
                       );
                     }).toList(),
-                    onChanged: (value) {}),
+                    onChanged: (value) => state.setAge(value)),
               ),
             ),
           ],
@@ -149,7 +154,16 @@ class _UserDetailsState extends State<UserDetails> {
           height: (234 / height) * height,
         ),
         ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              print(state.user.toJson());
+               String? success = await addUserDetails(state.user.name ?? 'Paras', 10, state.user.gender!,context);
+               if(success != null){
+                 print('couldn\'t process');
+               }
+               else{
+                 context.go('/');
+               }
+            },
             child: Text(
               'Next',
               style: Theme.of(context).textTheme.labelLarge,

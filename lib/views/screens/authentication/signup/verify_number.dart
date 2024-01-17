@@ -10,7 +10,7 @@ class VerifyNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> credPage = [OTPRequirement(isEmail: isEmail,isLoggingIn: true,),VerifyOTP(isEmail: isEmail,isLoggingIn: true,)];
+    final List<Widget> credPage = [OTPRequirement(isEmail: isEmail,isLoggingIn: isLoggingIn,),VerifyOTP(isEmail: isEmail,isLoggingIn: isLoggingIn,)];
     return PageView.builder(
         controller: PageControllers.verifyController,
         physics: const NeverScrollableScrollPhysics(),

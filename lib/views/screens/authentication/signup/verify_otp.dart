@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
-import 'package:vroom_vroom/controllers/authentication/controllers.dart';
+import 'package:provider/provider.dart';
+import 'package:vroom_vroom/controllers/authentication/validate_otp.dart';
+import 'package:vroom_vroom/controllers/authentication/validator.dart';
+import 'package:vroom_vroom/models/authentication/signup_model.dart';
+import 'package:vroom_vroom/services/authentication/verify_credentials.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
+import 'package:vroom_vroom/utils/providers/authentication/forgot_password_provider.dart';
+import 'package:vroom_vroom/utils/providers/authentication/signup_provider.dart';
+import 'package:vroom_vroom/utils/providers/authentication/verify_otp_provider.dart';
 
 class VerifyOTP extends StatelessWidget {
   final bool isEmail;
@@ -11,8 +17,31 @@ class VerifyOTP extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<VerifyOTPProvider>();
+    final state1 = context.watch<ForgotPasswordProvider>();
+    final signUpState = context.watch<SignUpProvider>();
+    final defaultPinTheme = PinTheme(
+      width: 56,
+      height: 56,
+      textStyle: const TextStyle(fontSize: 20, color: AppColors.textColor, fontWeight: FontWeight.w600),
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color.fromRGBO(234, 239, 243, 1)),
+        borderRadius: BorderRadius.circular(16),
+      ),
+    );
+
+    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
+      border: Border.all(color: AppColors.primaryColor),
+      borderRadius: BorderRadius.circular(16),
+    );
+
+    final errorPinTheme = defaultPinTheme.copyWith(
+      decoration: defaultPinTheme.decoration?.copyWith(
+        border: Border.all(color: Colors.red)
+      ),
+    );
     double height = MediaQuery.sizeOf(context).height;
-    return Column(
+    return ListView(
       children: [
         SizedBox(
           height: (65 / height) * height,
@@ -38,8 +67,22 @@ class VerifyOTP extends StatelessWidget {
         SizedBox(
           height: (71 / height) * height,
         ),
-        Pinput(
-        length: 6,
+        Form(
+          key: state.formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Consumer<VerifyOTPProvider>(builder: (BuildContext context, value, Widget? child) {
+            return Pinput(
+              errorText: (state.otpError == '')?null:state.otpError,
+              onChanged: (value) => state.setOTP(value),
+              defaultPinTheme: defaultPinTheme,
+              focusedPinTheme: focusedPinTheme,
+              errorPinTheme: errorPinTheme,
+              forceErrorState: (state.otpError == '')?false:true,
+              validator: (value) => Validator.isValidOTP(value!),
+              length: 6,
+            );
+          },
+          ),
         ),
         SizedBox(
           height: (236 / height) * height,
@@ -66,14 +109,44 @@ class VerifyOTP extends StatelessWidget {
               ],
             )),
         SizedBox(height: (22/height)*height,),
-        ElevatedButton(onPressed: (){
-          if(isLoggingIn){
-            context.go('/forgot_password/reset_password');
+        ElevatedButton(onPressed: () async {
+          // print('asdfsadfasddfadfsafsafasdfdasdf');
+          if(state.formKey.currentState!.validate()){
+            if(isLoggingIn){
+              print('logging in');
+              print(state1.model.forgotPasswordToken);
+              Map<String,dynamic> data = await validateOTP(state.otp, context);
+              print(data);
+              if(context.mounted){
+                if(data['success']){
+                  state.validateOTP(data['msg'], context);
+                  state.setToken(data['token']);
+                }
+                else{
+                  state.validateOTP(data['msg'], context);
+                }
+              }
+            }
+            else{
+                SignUpModel user = signUpState.user;
+                print('signing up');
+                if(isEmail){
+                  String? success =  await VerifyCredentials(otp: state.otp, email: user.email, number: user.number).verifyEmail(context);
+                  state.validateOTP(success, context,loggingIn: false);
+                }
+                else{
+                  print('herer');
+                  String? success = await VerifyCredentials(otp: state.otp, email: user.email, number: user.number).verifyPhone(context);
+                  print(success);
+                  print(user.toJson());
+                  state.validateOTP(success, context,loggingIn: false,isEmail: false);
+                }
+            }
           }
-          isEmail?PageControllers.signUpController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Easing.linear):PageControllers.signUpController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Easing.linear);
         }, child: Text('Confirm',style: Theme.of(context).textTheme.labelLarge,))
 
       ],
     );
   }
 }
+

@@ -1,24 +1,24 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:vroom_vroom/controllers/authentication/controllers.dart';
+import 'package:vroom_vroom/controllers/authentication/validate_login.dart';
+import 'package:vroom_vroom/controllers/authentication/validator.dart';
+import 'package:vroom_vroom/models/authentication/login_model.dart';
+import 'package:vroom_vroom/services/authentication/google_o_auth.dart';
+import 'package:vroom_vroom/services/authentication/login.dart';
+import 'package:vroom_vroom/utils/providers/authentication/login_provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  GlobalKey<FormState> key = GlobalKey<FormState>();
-
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
 
   @override
   Widget build(BuildContext context) {
+    final state  = context.watch<LoginProvider>();
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
@@ -53,19 +53,30 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: (48/height)*height,),
                 Form(
-                  key: key,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  key: state.formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       TextFormField(
-                        controller: _emailController,
+                        controller: TextControllers.emailController,
+                        onChanged: (value) => state.setEmail(value),
                         decoration: InputDecoration(
+                          errorText: (state.emailError == '')?null:state.emailError,
                           prefixIcon: Padding(
                             padding: const EdgeInsets.fromLTRB(15,5,10,5),
                             child: SvgPicture.asset('asset/icons/email.svg',),
                           ),
                           labelText: 'Email',
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                           prefixIconConstraints: const BoxConstraints(maxHeight: 80,maxWidth: 80),
                           filled: true,
                           fillColor: AppColors.secondaryColor,
@@ -78,17 +89,28 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
+                        validator: (value) => Validator.isValidEmail(value!),
                       ),
 
                       SizedBox(height: (28/height)*height),
 
                       TextFormField(
-                        controller: _passwordController,
+                        controller: TextControllers.passwordController,
+                        onChanged: (value) => state.setPassword(value),
                         decoration: InputDecoration(
                           labelText: 'Password',
+                          errorText: (state.passwordError == '')?null:state.passwordError,
                           prefixIcon: Padding(
                             padding: const EdgeInsets.fromLTRB(15,5,10,5),
                             child: SvgPicture.asset('asset/icons/password.svg'),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           prefixIconConstraints: const BoxConstraints(maxHeight: 80,maxWidth: 80),
                           filled: true,
@@ -103,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         obscureText: true,
+                        validator: (value) => Validator.isValidPassword(value!),
                       ),
 
                       SizedBox(height: (22/height)*height),
@@ -121,7 +144,17 @@ class _LoginPageState extends State<LoginPage> {
 
                       // Login Button
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          if(state.formKey.currentState!.validate()){
+                            LoginUserModel? res = await performLogin(TextControllers.emailController.text.toString(), TextControllers.passwordController.text.toString());
+                            if (res != null) {
+                              state.validateLogin(res.msg, context);
+
+                            } else {
+                              state.validateLogin("Invalid Credentials!", context);
+                            }
+                          }
+                        },
                         child: Text('Login',style: Theme.of(context).textTheme.labelLarge,),
                       ),
 
@@ -129,7 +162,9 @@ class _LoginPageState extends State<LoginPage> {
 
                       ElevatedButton.icon(
                         style: Theme.of(context).elevatedButtonTheme.style?.copyWith(backgroundColor: MaterialStateProperty.all<Color>(AppColors.textColor),),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await GoogleAuth().handleSignIn();
+                        },
                         icon: SvgPicture.asset('asset/icons/google.svg'),
                         label: Text('Continue with Google',style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.black),),
                       ),
