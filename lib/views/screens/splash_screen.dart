@@ -7,7 +7,7 @@ class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    Future<String?> accessToken = LoginUser().getAccessToken(context);
+    Future accessToken = LoginUser().getAccessToken(context);
     Future.delayed(const Duration(milliseconds: 500),()async{
       String? token = await accessToken;
       if(token == null && context.mounted){
@@ -24,14 +24,16 @@ class SplashScreen extends StatelessWidget {
       }
     });
     return Scaffold(
-      body: Column(
-        children: [
-          const Spacer(),
-          SvgPicture.asset('asset/icons/logo.svg'),
-          const SizedBox(height: 30,),
-          SvgPicture.asset('asset/icons/logo_text.svg'),
-          const Spacer(),
-        ],
+      body: Center(
+        child: Column(
+          children: [
+            const Spacer(),
+            SvgPicture.asset('asset/icons/logo.svg'),
+            const SizedBox(height: 10,),
+            SvgPicture.asset('asset/icons/logo_text.svg'),
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }

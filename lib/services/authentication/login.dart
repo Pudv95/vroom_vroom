@@ -104,23 +104,21 @@ class LoginUser {
 
   getAccessToken(BuildContext context)async{
     String? token = await storage.read(key: 'accessToken');
-    if(token == null){
-      context.go('/');
-      return;
+    if(token == null && context.mounted){
+      return null;
     }
     else{
-      bool tokenVerified = verifyToken(token);
+      bool tokenVerified = await verifyToken(token!);
       if(tokenVerified){
         return token;
       }
       else{
         String? refreshToken = await storage.read(key: 'refreshToken');
         String? accessToken = await refreshAccessToken(refreshToken!);
-        if(accessToken == null){
-          context.go('/');
-          return;
+        if(accessToken == null && context.mounted){
+          return null;
         }
-        storage.write(key: 'access', value: accessToken);
+        storage.write(key: 'accessToken', value: accessToken);
         return accessToken;
       }
     }
