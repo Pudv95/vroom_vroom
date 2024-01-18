@@ -11,6 +11,7 @@ import 'package:vroom_vroom/services/authentication/google_o_auth.dart';
 import 'package:vroom_vroom/services/authentication/login.dart';
 import 'package:vroom_vroom/utils/providers/authentication/login_provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
+import 'package:vroom_vroom/views/screens/authentication/widgets/custom_async_button.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -143,21 +144,18 @@ class LoginPage extends StatelessWidget {
                       SizedBox(height: (28/height)*height),
 
                       // Login Button
-                      ElevatedButton(
-                        onPressed: () async {
-                          if(state.formKey.currentState!.validate()){
-                            LoginUserModel? res = await performLogin(TextControllers.emailController.text.toString(), TextControllers.passwordController.text.toString());
-                            if (res != null) {
-                              state.validateLogin(res.msg, context);
+                      CustomElevatedButton(title: 'Log In', fn: () async {
+                        if(state.formKey.currentState!.validate()){
+                          LoginUserModel? res = await performLogin(TextControllers.emailController.text.toString(), TextControllers.passwordController.text.toString());
+                          if (res != null) {
+                            state.validateLogin(res.msg, context);
 
-                            } else {
-                              state.validateLogin("Invalid Credentials!", context);
-                            }
+                          } else {
+                            state.validateLogin("Invalid Credentials!", context);
                           }
-                        },
-                        child: Text('Login',style: Theme.of(context).textTheme.labelLarge,),
+                        }
+                      },
                       ),
-
                       SizedBox(height: (18/height)*height),
 
                       ElevatedButton.icon(
