@@ -163,7 +163,7 @@ class LoginPage extends StatelessWidget {
                       ElevatedButton.icon(
                         style: Theme.of(context).elevatedButtonTheme.style?.copyWith(backgroundColor: MaterialStateProperty.all<Color>(AppColors.textColor),),
                         onPressed: () async {
-                          await GoogleAuth().handleSignIn();
+                          await GoogleAuth(context: context).handleSignIn();
                         },
                         icon: SvgPicture.asset('asset/icons/google.svg'),
                         label: Text('Continue with Google',style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.black),),
