@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'login.dart';
 
 addUserDetails(String name, int age, String gender,BuildContext context) async {
-  final String token = LoginUser().getAccessToken(context);
+  final String token = await LoginUser().getAccessToken(context);
   if(gender == 'Male') gender = 'M';
   if(gender == 'Female') gender = 'F';
   if(gender == 'Other') gender = 'O';

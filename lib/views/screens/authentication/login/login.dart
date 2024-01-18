@@ -70,11 +70,11 @@ class LoginPage extends StatelessWidget {
                           ),
                           labelText: 'Email',
                           errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
+                            borderSide: const BorderSide(color: Colors.red),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
+                            borderSide: const BorderSide(color: Colors.red),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           prefixIconConstraints: const BoxConstraints(maxHeight: 80,maxWidth: 80),
@@ -105,11 +105,11 @@ class LoginPage extends StatelessWidget {
                             child: SvgPicture.asset('asset/icons/password.svg'),
                           ),
                           errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
+                            borderSide: const BorderSide(color: Colors.red),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
+                            borderSide: const BorderSide(color: Colors.red),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           prefixIconConstraints: const BoxConstraints(maxHeight: 80,maxWidth: 80),

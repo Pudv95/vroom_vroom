@@ -76,6 +76,7 @@ class LoginUser {
   }
 
   refreshAccessToken(String refresh) async {
+    print('herere');
     final String tokenRefreshUrl = '$baseUrl/auth/token/refresh/';
     try {
       final response = await http.post(
@@ -108,8 +109,8 @@ class LoginUser {
       return null;
     }
     else{
-      bool tokenVerified = await verifyToken(token!);
-      if(tokenVerified){
+      bool? tokenVerified = await verifyToken(token!);
+      if(tokenVerified != null && tokenVerified){
         return token;
       }
       else{

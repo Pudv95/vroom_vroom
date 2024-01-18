@@ -18,7 +18,7 @@ class VerifyCredentials{
   VerifyCredentials({required this.otp,required this.email,required this.number});
 
   Future<String?> sendVerificationOTPToNumber(BuildContext context) async {
-    final String token = LoginUser().getAccessToken(context);
+    final String token = await LoginUser().getAccessToken(context);
     number = "+91$number";
     print(number);
     print(token);
@@ -58,7 +58,7 @@ class VerifyCredentials{
 
   verifyPhone(BuildContext context) async {
 
-    final String accessToken = LoginUser().getAccessToken(context);
+    final String accessToken = await LoginUser().getAccessToken(context);
 
     final Uri uri = Uri.parse("$baseUrl/auth/verify-phone/");
     final Map<String, String> headers = {
@@ -87,7 +87,7 @@ class VerifyCredentials{
 
   verifyEmail(BuildContext context) async {
 
-    final String accessToken = LoginUser().getAccessToken(context);
+    final String accessToken = await LoginUser().getAccessToken(context);
 
     final Uri uri = Uri.parse("$baseUrl/auth/verify-email/");
     final Map<String, String> headers = {
