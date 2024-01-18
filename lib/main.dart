@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/forgot_password_provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/login_provider.dart';
@@ -72,6 +73,20 @@ void main() async {
             ),
           ),
         ),
+        builder: (BuildContext context, Widget? child) {
+          EasyLoading.instance
+            ..indicatorType = EasyLoadingIndicatorType.threeBounce
+            ..loadingStyle =EasyLoadingStyle.custom
+            ..indicatorSize = 40.0
+            ..textColor = Colors.transparent
+            ..backgroundColor = Colors.transparent
+            ..indicatorColor = Colors.blueAccent.shade100
+            ..maskType = EasyLoadingMaskType.black
+            ..animationStyle = EasyLoadingAnimationStyle.opacity
+            ..userInteractions = false;
+
+          return FlutterEasyLoading(child: child);
+        },
         themeMode: ThemeMode.dark,
         routerConfig: routes,
       ),)

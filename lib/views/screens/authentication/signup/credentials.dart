@@ -8,6 +8,7 @@ import 'package:vroom_vroom/controllers/authentication/validator.dart';
 import 'package:vroom_vroom/models/authentication/signup_model.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/providers/authentication/signup_provider.dart';
+import 'package:vroom_vroom/views/screens/authentication/widgets/custom_async_button.dart';
 import 'package:vroom_vroom/views/screens/authentication/widgets/custom_input_field.dart';
 
 class Credentials extends StatelessWidget {
@@ -86,8 +87,8 @@ class Credentials extends StatelessWidget {
         SizedBox(
           height: (22 / height) * height,
         ),
-        ElevatedButton(
-            onPressed: () async {
+        CustomElevatedButton(
+            fn: () async {
               if(state.formKey.currentState!.validate()){
                 SignUpModel signUpModel = await createUser(state.email, state.password);
                 signUpModel.email = state.email;
@@ -95,10 +96,7 @@ class Credentials extends StatelessWidget {
                 state.validateSignUp(signUpModel.message);
               }
             },
-            child: Text(
-              'Create Account',
-              style: Theme.of(context).textTheme.labelLarge,
-            )),
+            title: 'Create Account'),
         SizedBox(
           height: (18 / height) * height,
         ),

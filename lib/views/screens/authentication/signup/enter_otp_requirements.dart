@@ -9,6 +9,7 @@ import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/providers/authentication/forgot_password_provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/signup_provider.dart';
 import 'package:vroom_vroom/services/authentication/verify_credentials.dart';
+import 'package:vroom_vroom/views/screens/authentication/widgets/custom_async_button.dart';
 
 class OTPRequirement extends StatelessWidget {
   final bool isEmail;
@@ -83,7 +84,7 @@ class OTPRequirement extends StatelessWidget {
         SizedBox(
           height: (285 / height) * height,
         ),
-        ElevatedButton(onPressed: ()async{
+        CustomElevatedButton(fn: ()async{
           if(_formKey.currentState!.validate()){
             if(isLoggingIn){
               print('here');
@@ -105,7 +106,7 @@ class OTPRequirement extends StatelessWidget {
                 state.validateRequirement(message, context);
             }
           }
-        }, child: Text('Next',style: Theme.of(context).textTheme.labelLarge,))
+        }, title: 'Next',)
       ],
     );
   }

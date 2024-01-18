@@ -7,6 +7,7 @@ import 'package:vroom_vroom/services/authentication/reset_password.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/providers/authentication/reset_password_provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/verify_otp_provider.dart';
+import 'package:vroom_vroom/views/screens/authentication/widgets/custom_async_button.dart';
 
 class ResetPassword extends StatelessWidget {
   const ResetPassword({super.key});
@@ -119,8 +120,8 @@ class ResetPassword extends StatelessWidget {
                   ),
                 ],
               )),
-              ElevatedButton(
-                  onPressed: () async {
+              CustomElevatedButton(
+                  fn: () async {
                     if(state.formKey.currentState!.validate()){
                       print(state1.token);
                       Map<String,dynamic> data = await CreateNewPassword().resetPassword(state.password, context);
@@ -134,10 +135,7 @@ class ResetPassword extends StatelessWidget {
                       return;
                     }
                   },
-                  child: Text(
-                    'Reset Password',
-                    style: Theme.of(context).textTheme.labelLarge,
-                  )),
+                  title: 'Reset Password'),
               const Spacer(),
             ],
           ),
