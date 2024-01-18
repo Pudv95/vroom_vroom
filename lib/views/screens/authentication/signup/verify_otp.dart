@@ -9,6 +9,7 @@ import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/providers/authentication/forgot_password_provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/signup_provider.dart';
 import 'package:vroom_vroom/utils/providers/authentication/verify_otp_provider.dart';
+import 'package:vroom_vroom/views/screens/authentication/widgets/custom_async_button.dart';
 
 class VerifyOTP extends StatelessWidget {
   final bool isEmail;
@@ -109,8 +110,7 @@ class VerifyOTP extends StatelessWidget {
               ],
             )),
         SizedBox(height: (22/height)*height,),
-        ElevatedButton(onPressed: () async {
-          // print('asdfsadfasddfadfsafsafasdfdasdf');
+        CustomElevatedButton(fn: () async {
           if(state.formKey.currentState!.validate()){
             if(isLoggingIn){
               print('logging in');
@@ -143,7 +143,7 @@ class VerifyOTP extends StatelessWidget {
                 }
             }
           }
-        }, child: Text('Confirm',style: Theme.of(context).textTheme.labelLarge,))
+        }, title: 'Confirm')
 
       ],
     );

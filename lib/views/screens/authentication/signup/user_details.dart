@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:vroom_vroom/services/authentication/user_details.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/utils/providers/authentication/signup_provider.dart';
+import 'package:vroom_vroom/views/screens/authentication/widgets/custom_async_button.dart';
 
 class UserDetails extends StatefulWidget {
   const UserDetails({super.key});
@@ -153,8 +154,8 @@ class _UserDetailsState extends State<UserDetails> {
         SizedBox(
           height: (234 / height) * height,
         ),
-        ElevatedButton(
-            onPressed: () async {
+        CustomElevatedButton(
+            fn: () async {
               print(state.user.toJson());
                String? success = await addUserDetails(state.user.name ?? 'Paras', 10, state.user.gender!,context);
                if(success != null){
@@ -164,10 +165,7 @@ class _UserDetailsState extends State<UserDetails> {
                  context.go('/');
                }
             },
-            child: Text(
-              'Next',
-              style: Theme.of(context).textTheme.labelLarge,
-            ))
+            title: 'Next')
       ],
     );
   }
