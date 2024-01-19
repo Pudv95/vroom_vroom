@@ -10,7 +10,7 @@ class Verification {
   final String baseUrl = dotenv.get('BaseURL');
 
   verifyOTP(String otp,BuildContext context) async {
-    final String token = LoginUser().getAccessToken(context);
+    final String token = LoginUser().getAccessToken();
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/auth/reset/verify-otp/'),

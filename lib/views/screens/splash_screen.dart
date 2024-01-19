@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vroom_vroom/controllers/authentication/controllers.dart';
+import 'package:vroom_vroom/models/user/user_model.dart';
 import 'package:vroom_vroom/services/authentication/login.dart';
+import 'package:vroom_vroom/services/authentication/verify_credentials.dart';
+import 'package:vroom_vroom/services/user/get_user.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    Future accessToken = LoginUser().getAccessToken(context);
+    Future accessToken = LoginUser().getAccessToken();
     Future.delayed(const Duration(milliseconds: 500),()async{
       String? token = await accessToken;
       if(token == null && context.mounted){
@@ -15,8 +20,24 @@ class SplashScreen extends StatelessWidget {
       }
       else{
         bool isAuthenticated = await LoginUser().verifyToken(token!);
-        if(isAuthenticated && context.mounted){
-          context.go('/dashboard');
+        if(isAuthenticated){
+            final Map<String,dynamic> user = await GetUser().getUser();
+            UserModel userModel = UserModel.fromJson(user);
+            if(!(userModel.email_verified)){
+              Fluttertoast.showToast(msg: 'Email not Verified');
+              VerifyCredentials().resendEmailVerification();
+              PageControllers.credentialsController.jumpToPage(1);
+              context.go('/signup');
+            }
+            else if(!(userModel.phone_verified)){
+              Fluttertoast.showToast(msg: 'Phone number not Verified');
+              VerifyCredentials().sendVerificationOTPToNumber();
+              PageControllers.signUpController.jumpToPage(1);
+              context.go('/signup');
+            }
+            else{
+              context.go('/dashboard');
+            }
         }
         else{
             context.go('/login');

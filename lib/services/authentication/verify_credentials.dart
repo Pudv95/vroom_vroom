@@ -18,8 +18,8 @@ class VerifyCredentials{
 
   VerifyCredentials({this.otp,this.email,this.number});
 
-  Future<String?> sendVerificationOTPToNumber(BuildContext context) async {
-    final String token = await LoginUser().getAccessToken(context);
+  Future<String?> sendVerificationOTPToNumber() async {
+    final String token = await LoginUser().getAccessToken();
     number = "+91$number";
     print(number);
     print(token);
@@ -58,9 +58,9 @@ class VerifyCredentials{
     return null;
   }
 
-  void resendEmailVerification(context) async {
+  void resendEmailVerification() async {
     final url = Uri.parse('$baseUrl/auth/resend-email-verification/');
-    final String bearerToken = await LoginUser().getAccessToken(context);
+    final String bearerToken = await LoginUser().getAccessToken();
 
     try {
       final response = await http.post(
@@ -87,7 +87,7 @@ class VerifyCredentials{
 
   verifyPhone(BuildContext context) async {
 
-    final String accessToken = await LoginUser().getAccessToken(context);
+    final String accessToken = await LoginUser().getAccessToken();
 
     final Uri uri = Uri.parse("$baseUrl/auth/verify-phone/");
     final Map<String, String> headers = {
@@ -116,7 +116,7 @@ class VerifyCredentials{
 
   verifyEmail(BuildContext context) async {
 
-    final String accessToken = await LoginUser().getAccessToken(context);
+    final String accessToken = await LoginUser().getAccessToken();
 
     final Uri uri = Uri.parse("$baseUrl/auth/verify-email/");
     final Map<String, String> headers = {
