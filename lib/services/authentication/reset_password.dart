@@ -9,7 +9,7 @@ class CreateNewPassword {
   final String baseUrl = dotenv.get('BaseURL');
 
   resetPassword(String password,BuildContext context) async {
-    final String token = LoginUser().getAccessToken(context);
+    final String token = LoginUser().getAccessToken();
     final String url = '$baseUrl/auth/reset/';
 
     final Map<String, String> headers = {
