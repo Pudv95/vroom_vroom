@@ -11,6 +11,9 @@ import 'package:vroom_vroom/utils/providers/authentication/signup_provider.dart'
 import 'package:vroom_vroom/utils/providers/authentication/verify_otp_provider.dart';
 import 'package:vroom_vroom/views/screens/authentication/widgets/custom_async_button.dart';
 
+import '../../../../controllers/authentication/validate_forgot_password.dart';
+import '../../../../models/authentication/forget_password_model.dart';
+
 class VerifyOTP extends StatelessWidget {
   final bool isEmail;
   final bool isLoggingIn;
@@ -20,6 +23,7 @@ class VerifyOTP extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<VerifyOTPProvider>();
     final state1 = context.watch<ForgotPasswordProvider>();
+    final state2 = context.watch<SignUpProvider>();
     final signUpState = context.watch<SignUpProvider>();
     final defaultPinTheme = PinTheme(
       width: 56,
@@ -94,11 +98,29 @@ class VerifyOTP extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "Didn't received an email ?",
+                  "Didn't received the otp ?",
                 ),
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    if(isLoggingIn){
+                      print('here');
+                      ForgotPasswordModel? res = await validOTPRequest(state1.requirementField);
+                      state1.setForgetPassModel(res);
+                      print(res?.toJson());
+                      if (res != null) {
+                        state1.validateRequirement(res.msg, context);
 
+                      } else {
+                        state1.validateRequirement("User doesn\'t exist!", context);
+                      }
+                    }
+                    else{
+                      SignUpModel user = state2.user;
+                      print(user.toJson());
+                      user.number = state1.requirementField;
+                      String? message = await VerifyCredentials(otp: '',email: state1.requirementField,number: state1.requirementField).sendVerificationOTPToNumber(context);
+                      state1.validateRequirement(message, context);
+                    }
                   },
                   child: Text("Send again",
                       style: Theme.of(context)

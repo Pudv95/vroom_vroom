@@ -1,4 +1,5 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -34,6 +35,7 @@ class SendOtp {
         print('Response: ${response.body}');
         Map<String,dynamic> data = jsonDecode(response.body);
         data['success'] = true;
+        Fluttertoast.showToast(msg: 'OTP SENT');
         return data;
       } else {
         throw Exception(jsonDecode(response.body)['error']);

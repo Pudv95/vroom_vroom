@@ -2,20 +2,21 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'login.dart';
 
 class VerifyCredentials{
-  String otp;
+  String? otp;
   String? email;
   String? number;
   final String baseUrl = dotenv.get('BaseURL');
   final storage = const FlutterSecureStorage();
 
 
-  VerifyCredentials({required this.otp,required this.email,required this.number});
+  VerifyCredentials({this.otp,this.email,this.number});
 
   Future<String?> sendVerificationOTPToNumber(BuildContext context) async {
     final String token = await LoginUser().getAccessToken(context);
@@ -44,6 +45,7 @@ class VerifyCredentials{
       if (response.statusCode == 200) {
         print('OTP sent successfully to $number');
         print('Response: ${response.body}');
+        Fluttertoast.showToast(msg: 'OTP SENT');
         return null;
       } else {
         print('Failed to send OTP to $number. Status code: ${response.statusCode}');
@@ -54,6 +56,33 @@ class VerifyCredentials{
       print('Error: $error');
     }
     return null;
+  }
+
+  void resendEmailVerification(context) async {
+    final url = Uri.parse('$baseUrl/auth/resend-email-verification/');
+    final String bearerToken = await LoginUser().getAccessToken(context);
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'accept': 'application/json',
+          'Authorization': 'Bearer $bearerToken'
+        },
+        body: {},
+      );
+
+      if (response.statusCode == 201) {
+        print('Request successful');
+        print('Response: ${response.body}');
+        Fluttertoast.showToast(msg: 'OTP SENT');
+      } else {
+        print('Request failed with status: ${response.statusCode}');
+        print('Response: ${response.body}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   verifyPhone(BuildContext context) async {

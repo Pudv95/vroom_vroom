@@ -99,11 +99,16 @@ class OTPRequirement extends StatelessWidget {
               }
             }
             else{
+              if(isEmail){
+                VerifyCredentials().resendEmailVerification(context);
+              }
+              else{
                 SignUpModel user = state1.user;
                 print(user.toJson());
                 user.number = state.requirementField;
                 String? message = await VerifyCredentials(otp: '',email: '',number: state.requirementField).sendVerificationOTPToNumber(context);
                 state.validateRequirement(message, context);
+              }
             }
           }
         }, title: 'Next',)
