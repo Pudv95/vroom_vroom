@@ -8,7 +8,6 @@ import 'package:vroom_vroom/controllers/authentication/validate_login.dart';
 import 'package:vroom_vroom/controllers/authentication/validator.dart';
 import 'package:vroom_vroom/models/authentication/login_model.dart';
 import 'package:vroom_vroom/services/authentication/google_o_auth.dart';
-import 'package:vroom_vroom/services/authentication/login.dart';
 import 'package:vroom_vroom/utils/providers/authentication/login_provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
 import 'package:vroom_vroom/views/screens/authentication/widgets/custom_async_button.dart';
@@ -135,7 +134,7 @@ class LoginPage extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () {
-                            context.push('/forgot_password');
+                            context.push('/login/forgot_password');
                           },
                           child: Text('Forgot Password?',style: Theme.of(context).textTheme.displaySmall?.copyWith(color: AppColors.primaryColor),),
                         ),

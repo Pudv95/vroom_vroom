@@ -8,13 +8,15 @@ class VerifyCredentials extends StatelessWidget {
   final List<Widget> credPage = [Credentials(),const VerifyOTP(isEmail: true)];
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: PageControllers.credentialsController,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 2,
-      itemBuilder: (BuildContext context, int index) {
-        return credPage[index];
-    },);
+    return Scaffold(
+      body: PageView.builder(
+        controller: PageControllers.credentialsController,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: 2,
+        itemBuilder: (BuildContext context, int index) {
+          return credPage[index];
+      },),
+    );
   }
 }
 

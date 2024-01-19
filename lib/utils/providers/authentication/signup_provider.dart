@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vroom_vroom/controllers/authentication/validator.dart';
 import 'package:vroom_vroom/models/authentication/signup_model.dart';
 
@@ -12,7 +13,7 @@ class SignUpProvider extends ChangeNotifier {
   String _password = '';
   String _emailError = '';
   String _passwordError = '';
-  SignUpModel _model = SignUpModel(name: '', email: '', password: [], gender: '', age: '', success: null, message: '', refreshToken: '', accessToken: '', number: '');
+  SignUpModel _model = SignUpModel(termsAndConditions:false,name: '', email: '', password: [], gender: '', age: '', success: null, message: '', refreshToken: '', accessToken: '', number: '');
 
   String get email => _email;
   String get password => _password;
@@ -23,6 +24,11 @@ class SignUpProvider extends ChangeNotifier {
   void setEmail(String value) {
     _email = value;
     _emailError = Validator.isValidEmail(value) ?? '';
+    notifyListeners();
+  }
+
+  void toggleTnP(){
+    _model.termsAndConditions =!_model.termsAndConditions!;
     notifyListeners();
   }
 
@@ -54,7 +60,6 @@ class SignUpProvider extends ChangeNotifier {
   void validateSignUp(String? apiErrorMessage) {
     _emailError = '';
     _passwordError = '';
-
     if (apiErrorMessage != null && apiErrorMessage.isNotEmpty) {
       _emailError = apiErrorMessage;
       if (_emailError.toLowerCase().contains('password')) {

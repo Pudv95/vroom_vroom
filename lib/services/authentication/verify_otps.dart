@@ -9,8 +9,8 @@ import 'login.dart';
 class Verification {
   final String baseUrl = dotenv.get('BaseURL');
 
-  verifyOTP(String otp,BuildContext context) async {
-    final String token = LoginUser().getAccessToken();
+  verifyOTP(String otp,BuildContext context,String token) async {
+    // final String token = await LoginUser().getAccessToken();
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/auth/reset/verify-otp/'),
@@ -27,6 +27,7 @@ class Verification {
       Map data = jsonDecode(response.body);
       if (response.statusCode == 200) {
         data['success'] = true;
+        data['msg'] = '';
         return data;
 
       } else {

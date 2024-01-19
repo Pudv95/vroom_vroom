@@ -25,6 +25,7 @@ class GetUser{
         final Map<String, dynamic> data = jsonDecode(response.body);
         return data;
       } else {
+        print(jsonDecode(response.body));
         return null;
       }
     } catch (e) {

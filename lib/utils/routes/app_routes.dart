@@ -5,9 +5,6 @@ import 'package:vroom_vroom/views/screens/authentication/login/forgot_password.d
 import 'package:vroom_vroom/views/screens/authentication/login/login.dart';
 import 'package:vroom_vroom/views/screens/authentication/login/reset_password.dart';
 import 'package:vroom_vroom/views/screens/authentication/signup/signup.dart';
-import 'package:vroom_vroom/views/screens/authentication/signup/user_details.dart';
-import 'package:vroom_vroom/views/screens/authentication/signup/verify_otp.dart';
-import 'package:vroom_vroom/views/screens/authentication/signup/verify_number.dart';
 import 'package:vroom_vroom/views/screens/home/dashboard.dart';
 import 'package:vroom_vroom/views/screens/splash_screen.dart';
 
@@ -83,10 +80,11 @@ final GoRouter routes = GoRouter(
     GoRoute(
       path: '/signup',
       builder: (BuildContext context, GoRouterState state) {
-        return SignUp();
+        int? extras = state.extra as int;
+        return SignUp(page: extras,);
       },
       pageBuilder: (context, state) =>
-          customTransition(context: context, state: state, child: SignUp()),
+          customTransition(context: context, state: state, child: SignUp(page: state.extra as int?,)),
     ),
 
     // Home

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 
 class ResetPasswordProvider extends ChangeNotifier {
@@ -26,7 +27,8 @@ class ResetPasswordProvider extends ChangeNotifier {
       _passwordError = apiErrorMessage;
     } else {
       _passwordError = '';
-      context.go('/');
+      Fluttertoast.showToast(msg: 'Password changed Successfully!');
+      context.go('/login');
     }
 
     notifyListeners();

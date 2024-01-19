@@ -20,16 +20,15 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserModel {
-  String get email => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get phone_number => throw _privateConstructorUsedError;
-  String get profile_picture => throw _privateConstructorUsedError;
-  int get age => throw _privateConstructorUsedError;
-  String get gender => throw _privateConstructorUsedError;
-  bool get email_verified => throw _privateConstructorUsedError;
-  bool get phone_verified => throw _privateConstructorUsedError;
-  bool get is_staff => throw _privateConstructorUsedError;
-  bool get isActive => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get phone_number => throw _privateConstructorUsedError;
+  String? get profile_picture => throw _privateConstructorUsedError;
+  int? get age => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
+  bool? get email_verified => throw _privateConstructorUsedError;
+  bool? get phone_verified => throw _privateConstructorUsedError;
+  bool? get is_staff => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,16 +42,15 @@ abstract class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      {String email,
-      String name,
-      String phone_number,
-      String profile_picture,
-      int age,
-      String gender,
-      bool email_verified,
-      bool phone_verified,
-      bool is_staff,
-      bool isActive});
+      {String? email,
+      String? name,
+      String? phone_number,
+      String? profile_picture,
+      int? age,
+      String? gender,
+      bool? email_verified,
+      bool? phone_verified,
+      bool? is_staff});
 }
 
 /// @nodoc
@@ -68,58 +66,53 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = null,
-    Object? name = null,
-    Object? phone_number = null,
-    Object? profile_picture = null,
-    Object? age = null,
-    Object? gender = null,
-    Object? email_verified = null,
-    Object? phone_verified = null,
-    Object? is_staff = null,
-    Object? isActive = null,
+    Object? email = freezed,
+    Object? name = freezed,
+    Object? phone_number = freezed,
+    Object? profile_picture = freezed,
+    Object? age = freezed,
+    Object? gender = freezed,
+    Object? email_verified = freezed,
+    Object? phone_verified = freezed,
+    Object? is_staff = freezed,
   }) {
     return _then(_value.copyWith(
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      phone_number: null == phone_number
+              as String?,
+      phone_number: freezed == phone_number
           ? _value.phone_number
           : phone_number // ignore: cast_nullable_to_non_nullable
-              as String,
-      profile_picture: null == profile_picture
+              as String?,
+      profile_picture: freezed == profile_picture
           ? _value.profile_picture
           : profile_picture // ignore: cast_nullable_to_non_nullable
-              as String,
-      age: null == age
+              as String?,
+      age: freezed == age
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
-              as int,
-      gender: null == gender
+              as int?,
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      email_verified: null == email_verified
+              as String?,
+      email_verified: freezed == email_verified
           ? _value.email_verified
           : email_verified // ignore: cast_nullable_to_non_nullable
-              as bool,
-      phone_verified: null == phone_verified
+              as bool?,
+      phone_verified: freezed == phone_verified
           ? _value.phone_verified
           : phone_verified // ignore: cast_nullable_to_non_nullable
-              as bool,
-      is_staff: null == is_staff
+              as bool?,
+      is_staff: freezed == is_staff
           ? _value.is_staff
           : is_staff // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ) as $Val);
   }
 }
@@ -133,16 +126,15 @@ abstract class _$$UserModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String email,
-      String name,
-      String phone_number,
-      String profile_picture,
-      int age,
-      String gender,
-      bool email_verified,
-      bool phone_verified,
-      bool is_staff,
-      bool isActive});
+      {String? email,
+      String? name,
+      String? phone_number,
+      String? profile_picture,
+      int? age,
+      String? gender,
+      bool? email_verified,
+      bool? phone_verified,
+      bool? is_staff});
 }
 
 /// @nodoc
@@ -156,58 +148,53 @@ class __$$UserModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = null,
-    Object? name = null,
-    Object? phone_number = null,
-    Object? profile_picture = null,
-    Object? age = null,
-    Object? gender = null,
-    Object? email_verified = null,
-    Object? phone_verified = null,
-    Object? is_staff = null,
-    Object? isActive = null,
+    Object? email = freezed,
+    Object? name = freezed,
+    Object? phone_number = freezed,
+    Object? profile_picture = freezed,
+    Object? age = freezed,
+    Object? gender = freezed,
+    Object? email_verified = freezed,
+    Object? phone_verified = freezed,
+    Object? is_staff = freezed,
   }) {
     return _then(_$UserModelImpl(
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      phone_number: null == phone_number
+              as String?,
+      phone_number: freezed == phone_number
           ? _value.phone_number
           : phone_number // ignore: cast_nullable_to_non_nullable
-              as String,
-      profile_picture: null == profile_picture
+              as String?,
+      profile_picture: freezed == profile_picture
           ? _value.profile_picture
           : profile_picture // ignore: cast_nullable_to_non_nullable
-              as String,
-      age: null == age
+              as String?,
+      age: freezed == age
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
-              as int,
-      gender: null == gender
+              as int?,
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      email_verified: null == email_verified
+              as String?,
+      email_verified: freezed == email_verified
           ? _value.email_verified
           : email_verified // ignore: cast_nullable_to_non_nullable
-              as bool,
-      phone_verified: null == phone_verified
+              as bool?,
+      phone_verified: freezed == phone_verified
           ? _value.phone_verified
           : phone_verified // ignore: cast_nullable_to_non_nullable
-              as bool,
-      is_staff: null == is_staff
+              as bool?,
+      is_staff: freezed == is_staff
           ? _value.is_staff
           : is_staff // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ));
   }
 }
@@ -224,37 +211,33 @@ class _$UserModelImpl implements _UserModel {
       required this.gender,
       required this.email_verified,
       required this.phone_verified,
-      required this.is_staff,
-      this.isActive = false});
+      required this.is_staff});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
 
   @override
-  final String email;
+  final String? email;
   @override
-  final String name;
+  final String? name;
   @override
-  final String phone_number;
+  final String? phone_number;
   @override
-  final String profile_picture;
+  final String? profile_picture;
   @override
-  final int age;
+  final int? age;
   @override
-  final String gender;
+  final String? gender;
   @override
-  final bool email_verified;
+  final bool? email_verified;
   @override
-  final bool phone_verified;
+  final bool? phone_verified;
   @override
-  final bool is_staff;
-  @override
-  @JsonKey()
-  final bool isActive;
+  final bool? is_staff;
 
   @override
   String toString() {
-    return 'UserModel(email: $email, name: $name, phone_number: $phone_number, profile_picture: $profile_picture, age: $age, gender: $gender, email_verified: $email_verified, phone_verified: $phone_verified, is_staff: $is_staff, isActive: $isActive)';
+    return 'UserModel(email: $email, name: $name, phone_number: $phone_number, profile_picture: $profile_picture, age: $age, gender: $gender, email_verified: $email_verified, phone_verified: $phone_verified, is_staff: $is_staff)';
   }
 
   @override
@@ -275,25 +258,13 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.phone_verified, phone_verified) ||
                 other.phone_verified == phone_verified) &&
             (identical(other.is_staff, is_staff) ||
-                other.is_staff == is_staff) &&
-            (identical(other.isActive, isActive) ||
-                other.isActive == isActive));
+                other.is_staff == is_staff));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      email,
-      name,
-      phone_number,
-      profile_picture,
-      age,
-      gender,
-      email_verified,
-      phone_verified,
-      is_staff,
-      isActive);
+  int get hashCode => Object.hash(runtimeType, email, name, phone_number,
+      profile_picture, age, gender, email_verified, phone_verified, is_staff);
 
   @JsonKey(ignore: true)
   @override
@@ -311,40 +282,37 @@ class _$UserModelImpl implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-      {required final String email,
-      required final String name,
-      required final String phone_number,
-      required final String profile_picture,
-      required final int age,
-      required final String gender,
-      required final bool email_verified,
-      required final bool phone_verified,
-      required final bool is_staff,
-      final bool isActive}) = _$UserModelImpl;
+      {required final String? email,
+      required final String? name,
+      required final String? phone_number,
+      required final String? profile_picture,
+      required final int? age,
+      required final String? gender,
+      required final bool? email_verified,
+      required final bool? phone_verified,
+      required final bool? is_staff}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
 
   @override
-  String get email;
+  String? get email;
   @override
-  String get name;
+  String? get name;
   @override
-  String get phone_number;
+  String? get phone_number;
   @override
-  String get profile_picture;
+  String? get profile_picture;
   @override
-  int get age;
+  int? get age;
   @override
-  String get gender;
+  String? get gender;
   @override
-  bool get email_verified;
+  bool? get email_verified;
   @override
-  bool get phone_verified;
+  bool? get phone_verified;
   @override
-  bool get is_staff;
-  @override
-  bool get isActive;
+  bool? get is_staff;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>

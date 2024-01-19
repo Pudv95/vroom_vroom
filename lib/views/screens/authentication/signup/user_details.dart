@@ -162,7 +162,7 @@ class _UserDetailsState extends State<UserDetails> {
                  print('couldn\'t process');
                }
                else{
-                 context.go('/');
+                 context.go('/dashboard');
                }
             },
             title: 'Next')

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
@@ -43,11 +44,11 @@ class GoogleAuth{
       Map data = jsonDecode(response.body);
       storage.write(key: 'refreshToken', value: data['refresh_token']);
       storage.write(key: 'accessToken', value: data['access_token']);
-      context?.go('/dashboard');
-
+      context?.go('/');
     } else if(response.statusCode == 400) {
       // Handle error
       print('not akgec');
+      Fluttertoast.showToast(msg: 'Please choose an akgec email');
       await _googleSignIn.signOut();
       print('signed out');
     }

@@ -33,7 +33,7 @@ class VerifyOTPProvider extends ChangeNotifier {
     } else {
       _otpError = '';
       if (loggingIn) {
-        context.go('/forgot_password/reset_password');
+        context.go('/login/forgot_password/reset_password');
       } else {
         (isEmail)
             ? PageControllers.signUpController.animateToPage(1,

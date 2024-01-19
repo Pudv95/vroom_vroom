@@ -47,6 +47,7 @@ class VerifyOTP extends StatelessWidget {
     );
     double height = MediaQuery.sizeOf(context).height;
     return ListView(
+      physics: const NeverScrollableScrollPhysics(),
       children: [
         SizedBox(
           height: (65 / height) * height,
@@ -137,7 +138,7 @@ class VerifyOTP extends StatelessWidget {
             if(isLoggingIn){
               print('logging in');
               print(state1.model.forgotPasswordToken);
-              Map<String,dynamic> data = await validateOTP(state.otp, context);
+              Map<String,dynamic> data = await validateOTP(state.otp, context,state1.model.forgotPasswordToken);
               print(data);
               if(context.mounted){
                 if(data['success']){

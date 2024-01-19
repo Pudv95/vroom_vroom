@@ -24,9 +24,8 @@ class DetailsForOtp extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: (90/height)*height,),
               Expanded(
-                  child: VerifyNumber(isEmail: isEmail,isLoggingIn: true,)
+                  child: VerifyNumber(isEmail: isEmail,isLoggingIn: isLoggingIn,)
               ),
             ],
           ),

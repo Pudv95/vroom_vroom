@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vroom_vroom/controllers/authentication/controllers.dart';
 import 'package:vroom_vroom/models/user/user_model.dart';
 import 'package:vroom_vroom/services/authentication/login.dart';
 import 'package:vroom_vroom/services/authentication/verify_credentials.dart';
@@ -21,19 +21,24 @@ class SplashScreen extends StatelessWidget {
       else{
         bool isAuthenticated = await LoginUser().verifyToken(token!);
         if(isAuthenticated){
-            final Map<String,dynamic> user = await GetUser().getUser();
+            final Map<String,dynamic>? user = await GetUser().getUser();
+            if(user == null){
+              Fluttertoast.showToast(msg: 'Login Expired');
+              FlutterSecureStorage().deleteAll();
+              context.go('/login');
+              return;
+            }
             UserModel userModel = UserModel.fromJson(user);
-            if(!(userModel.email_verified)){
+            print(userModel.toJson());
+            if(!(userModel.email_verified!)){
               Fluttertoast.showToast(msg: 'Email not Verified');
               VerifyCredentials().resendEmailVerification();
-              PageControllers.credentialsController.jumpToPage(1);
-              context.go('/signup');
+              context.go('/signup',extra: 2);
+
             }
-            else if(!(userModel.phone_verified)){
+            else if(!(userModel.phone_verified!)){
               Fluttertoast.showToast(msg: 'Phone number not Verified');
-              VerifyCredentials().sendVerificationOTPToNumber();
-              PageControllers.signUpController.jumpToPage(1);
-              context.go('/signup');
+              context.go('/signup',extra: 1);
             }
             else{
               context.go('/dashboard');
