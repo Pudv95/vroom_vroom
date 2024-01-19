@@ -44,9 +44,9 @@ class GoogleAuth{
       Map data = jsonDecode(response.body);
       storage.write(key: 'refreshToken', value: data['refresh_token']);
       storage.write(key: 'accessToken', value: data['access_token']);
+      Fluttertoast.showToast(msg: 'Account Found');
       context?.go('/');
     } else if(response.statusCode == 400) {
-      // Handle error
       print('not akgec');
       Fluttertoast.showToast(msg: 'Please choose an akgec email');
       await _googleSignIn.signOut();

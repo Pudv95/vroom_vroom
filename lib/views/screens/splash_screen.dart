@@ -21,10 +21,12 @@ class SplashScreen extends StatelessWidget {
       else{
         bool isAuthenticated = await LoginUser().verifyToken(token!);
         if(isAuthenticated){
+          Fluttertoast.showToast(msg: 'Verifying details');
             final Map<String,dynamic>? user = await GetUser().getUser();
             if(user == null){
               Fluttertoast.showToast(msg: 'Login Expired');
-              FlutterSecureStorage().deleteAll();
+              const FlutterSecureStorage().deleteAll();
+              Fluttertoast.showToast(msg: 'Verification failed');
               context.go('/login');
               return;
             }
