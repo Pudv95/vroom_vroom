@@ -8,8 +8,8 @@ import 'package:vroom_vroom/services/authentication/login.dart';
 class CreateNewPassword {
   final String baseUrl = dotenv.get('BaseURL');
 
-  resetPassword(String password,BuildContext context) async {
-    final String token = LoginUser().getAccessToken();
+  resetPassword(String password,BuildContext context,String token) async {
+
     final String url = '$baseUrl/auth/reset/';
 
     final Map<String, String> headers = {

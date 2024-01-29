@@ -148,6 +148,7 @@ class LoginPage extends StatelessWidget {
                           LoginUserModel? res = await performLogin(TextControllers.emailController.text.toString(), TextControllers.passwordController.text.toString());
                           if (res != null) {
                             state.validateLogin(res.msg, context);
+                            context.go('/');
 
                           } else {
                             state.validateLogin("Invalid Credentials!", context);

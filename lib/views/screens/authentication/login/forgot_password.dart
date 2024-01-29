@@ -49,14 +49,18 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
                 SizedBox(height: (48/height)*height,),
                 SelectableButton(text: 'Reset with email',iconPath: 'asset/icons/email.svg' ,isSelected: !selected, onSelect: (){
-                  selected = !selected;
+                  if(selected) {
+                    selected = !selected;
+                  }
                   setState(() {
             
                   });
                 }),
                 SizedBox(height: (18/height)*height,),
                 SelectableButton(text: 'Reset with SMS', iconPath:'asset/icons/sms.svg'  ,isSelected: selected, onSelect: (){
-                  selected = !selected;
+                  if(!selected) {
+                    selected = !selected;
+                  }
                       setState(() {
             
                       });

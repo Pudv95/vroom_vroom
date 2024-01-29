@@ -12,11 +12,6 @@ Future<LoginUserModel?> performLogin(String email, String pass) async {
     final LoginUserModel loginUserModel = LoginUserModel.fromJson(responseData);
 
     if (loginUserModel.success!) {
-      print('Login successful!');
-      print('Access Token: ${loginUserModel.accessToken}');
-      print('Refresh Token: ${loginUserModel.refreshToken}');
-      print('Email: ${loginUserModel.email}');
-      print('msg: ${loginUserModel.msg}');
       return loginUserModel;
     } else {
 

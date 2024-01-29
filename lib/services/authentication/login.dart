@@ -30,6 +30,8 @@ class LoginUser {
         print('Token: ${response.body}');
         final Map<String, dynamic> data = jsonDecode(response.body);
         data['success'] = true;
+        storage.write(key: 'refreshToken', value: data['refresh']);
+        storage.write(key: 'accessToken', value: data['access']);
         return data;
       } else if (response.statusCode == 401) {
         print('Login failed');
