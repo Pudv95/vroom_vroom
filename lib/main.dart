@@ -1,45 +1,95 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:provider/provider.dart';
+import 'package:vroom_vroom/utils/providers/authentication/forgot_password_provider.dart';
+import 'package:vroom_vroom/utils/providers/authentication/login_provider.dart';
 import 'package:vroom_vroom/utils/contants/colors/app_colors.dart';
+import 'package:vroom_vroom/utils/providers/authentication/reset_password_provider.dart';
+import 'package:vroom_vroom/utils/providers/authentication/signup_provider.dart';
+import 'package:vroom_vroom/utils/providers/authentication/verify_otp_provider.dart';
 import 'package:vroom_vroom/utils/routes/app_routes.dart';
 
-void main() {
+void main() async {
+  await dotenv.load();
+  WidgetsFlutterBinding.ensureInitialized();
   return runApp(
-      MaterialApp.router(
+      MultiProvider(
+        providers: [
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => ForgotPasswordProvider()),
+        ChangeNotifierProvider(create: (context) => VerifyOTPProvider()),
+        ChangeNotifierProvider(create: (context) => ResetPasswordProvider()),
+        ChangeNotifierProvider(create: (context) => SignUpProvider()),
+      ],child: MaterialApp.router(
         // theme: ThemeData(),
-        darkTheme: ThemeData(
-          fontFamily: 'lato',
+        darkTheme: ThemeData.dark().copyWith(
+          primaryColor: AppColors.textColor,
           scaffoldBackgroundColor: AppColors.backgroundColor,
           textTheme: const TextTheme(
-              headlineLarge: TextStyle(
+            headlineLarge: TextStyle(
                 fontSize: 40,
-                fontWeight: FontWeight.w800,
+                fontFamily: 'lato',
+                fontWeight: FontWeight.w900,
                 color: AppColors.textColor
-              ),
-              headlineSmall: TextStyle(
+            ),
+            headlineSmall: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
+                fontFamily: 'lato',
                 color: AppColors.textColor,
                 letterSpacing: 0.3,
                 height: 1.5
-              ),
-              displayMedium: TextStyle(
+            ),
+            displayMedium: TextStyle(
                 fontSize: 14,
+                fontFamily: 'lato',
                 fontWeight: FontWeight.w400, color: AppColors.textColor
-              ),
-              displaySmall: TextStyle(
+            ),
+            displaySmall: TextStyle(
                 fontSize: 12,
+                fontFamily: 'lato',
                 fontWeight: FontWeight.w400,
-                  color: AppColors.textColor
+                color: AppColors.textColor
+            ),
+            labelLarge: TextStyle(
+              fontSize: 16,fontFamily: 'lato',
+              fontWeight: FontWeight.w700,
+              color: AppColors.textColor,
+            ),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(AppColors.primaryColor),
+              minimumSize: MaterialStateProperty.all<Size>(const Size(double.infinity,56)),
+              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(horizontal: 20.0),
               ),
-              labelLarge: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                  color: AppColors.textColor,
+              shape: MaterialStateProperty.all<OutlinedBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0), // Set button border radius
+                ),
               ),
-          )
+            ),
+          ),
         ),
+        builder: (BuildContext context, Widget? child) {
+          EasyLoading.instance
+            ..indicatorType = EasyLoadingIndicatorType.threeBounce
+            ..loadingStyle =EasyLoadingStyle.custom
+            ..indicatorSize = 40.0
+            ..textColor = Colors.transparent
+            ..backgroundColor = Colors.transparent
+            ..indicatorColor = Colors.blueAccent.shade100
+            ..maskType = EasyLoadingMaskType.black
+            ..animationStyle = EasyLoadingAnimationStyle.opacity
+            ..userInteractions = false;
+
+          return FlutterEasyLoading(child: child);
+        },
+        themeMode: ThemeMode.dark,
         routerConfig: routes,
-      )
+      ),)
   );
 }
 
