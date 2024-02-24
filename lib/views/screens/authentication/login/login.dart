@@ -149,6 +149,7 @@ class LoginPage extends StatelessWidget {
                           if (res != null) {
                             state.validateLogin(res.msg, context);
                             context.go('/');
+                            TextControllers().dispose();
 
                           } else {
                             state.validateLogin("Invalid Credentials!", context);
